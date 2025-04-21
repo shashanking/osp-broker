@@ -222,8 +222,9 @@ class _MembershipCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 515.w,
-      height: 600.h,
+      constraints: BoxConstraints(minHeight: 600.h),
       margin: EdgeInsets.zero,
+      padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 24.w),
       decoration: BoxDecoration(
         gradient: data['bgGradient'],
         borderRadius: BorderRadius.circular(32.r),
@@ -234,145 +235,130 @@ class _MembershipCard extends StatelessWidget {
             offset: Offset(0, 8.h),
           ),
         ],
-        // backdropFilter not directly supported, can use BackdropFilter if needed
       ),
-      child: Stack(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Top Row: Icon + Price
-          Positioned(
-            left: 24.w,
-            top: 24.h,
-            right: 24.w,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: 90.w,
-                  height: 90.w,
-                  child: Image.asset(data['icon'], fit: BoxFit.contain),
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: data['price'] == '\u0000'
-                            ? ''
-                            : '\$${data['price']}',
-                        style: TextStyle(
-                          fontFamily: 'Basement Grotesque',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 36.sp,
-                          color: Colors.white,
-                        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 90.w,
+                height: 90.w,
+                child: Image.asset(data['icon'], fit: BoxFit.contain),
+              ),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: data['price'] == '\u0000'
+                          ? ''
+                          : '\$${data['price']}',
+                      style: TextStyle(
+                        fontFamily: 'Basement Grotesque',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 36.sp,
+                        color: Colors.white,
                       ),
-                      TextSpan(
-                        text: data['priceLabel'],
-                        style: TextStyle(
-                          fontFamily: 'Basement Grotesque',
-                          fontWeight: FontWeight.w800,
-                          fontSize: 20.sp,
-                          color: Colors.white,
-                        ),
+                    ),
+                    TextSpan(
+                      text: data['priceLabel'],
+                      style: TextStyle(
+                        fontFamily: 'Basement Grotesque',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20.sp,
+                        color: Colors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
+            ],
+          ),
+          SizedBox(height: 24.h),
+          // Title
+          Text(
+            data['title'],
+            style: TextStyle(
+              fontFamily: 'Basement Grotesque',
+              fontWeight: FontWeight.w800,
+              fontSize: 36.sp,
+              color: data['titleColor'],
             ),
           ),
-          // Text Content
-          Positioned(
-            left: 24.w,
-            top: 146.h,
-            right: 24.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data['title'],
-                  style: TextStyle(
+          SizedBox(height: 12.h),
+          // Description
+          Text(
+            data['desc'],
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              fontSize: 12.sp,
+              color: const Color(0xFFEBE6DC),
+            ),
+          ),
+          SizedBox(height: 24.h),
+          // Features
+          ...List.generate(
+            (data['features'] as List).length,
+            (i) => Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('• ',
+                      style:
+                          TextStyle(color: Colors.white, fontSize: 20)),
+                  Expanded(
+                    child: Text(
+                      data['features'][i],
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20.sp,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 32.h),
+          // Button
+          SizedBox(
+            width: double.infinity,
+            height: 60.h,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFECC733), Color(0xFFD49823)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.circular(50.r),
+              ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.r),
+                  ),
+                  elevation: 0,
+                  foregroundColor: const Color(0xFF333333),
+                  textStyle: TextStyle(
                     fontFamily: 'Basement Grotesque',
                     fontWeight: FontWeight.w800,
-                    fontSize: 36.sp,
-                    color: data['titleColor'],
+                    fontSize: 20.sp,
                   ),
                 ),
-                SizedBox(height: 12.h),
-                Text(
-                  data['desc'],
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.sp,
-                    color: const Color(0xFFEBE6DC),
-                  ),
-                ),
-                SizedBox(height: 24.h),
-                ...List.generate(
-                  (data['features'] as List).length,
-                  (i) => Padding(
-                    padding: EdgeInsets.only(bottom: 8.h),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('• ',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20)),
-                        Expanded(
-                          child: Text(
-                            data['features'][i],
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20.sp,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Button
-          Positioned(
-            left: 24.w,
-            right: 24.w,
-            bottom: 24.h,
-            child: SizedBox(
-              width: double.infinity,
-              height: 60.h,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFECC733), Color(0xFFD49823)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: BorderRadius.circular(50.r),
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 40.w, vertical: 10.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.r),
-                    ),
-                    elevation: 0,
-                    foregroundColor: const Color(0xFF333333),
-                    textStyle: TextStyle(
-                      fontFamily: 'Basement Grotesque',
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20.sp,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text('Start Now!'),
-                ),
+                onPressed: () {},
+                child: const Text('Start Now!'),
               ),
             ),
           ),

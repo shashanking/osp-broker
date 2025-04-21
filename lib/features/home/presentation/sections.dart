@@ -40,7 +40,7 @@ const List<Auction> sampleAuctions = [
     estimate: 'Estimate \$25,000',
     location: 'New York',
     bid: '24,250',
-    timeLeft: '32:45:53',
+    timeLeft: '32:45:53', 
     bids: 43,
     comments: 32,
     isFavorite: false,
@@ -527,7 +527,7 @@ class AuctionCard extends StatelessWidget {
           Positioned(
             left: 20.w,
             right: 20.w,
-            bottom: 20.h,
+            bottom: 10.h,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
