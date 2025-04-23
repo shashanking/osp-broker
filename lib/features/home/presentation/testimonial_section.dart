@@ -230,7 +230,7 @@ class _TestimonialSectionState extends State<TestimonialSection> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 230.h,
+                    height: 250.h,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

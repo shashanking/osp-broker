@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:osp_broker/core/theme/app_colors.dart';
 import 'package:osp_broker/core/theme/app_text_styles.dart';
 import 'package:osp_broker/core/theme/app_gradients.dart';
+import '../../membership/presentation/membership_herosection.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection();
@@ -244,21 +245,61 @@ class FooterSection extends StatelessWidget {
                                         fontSize: 32.sp,
                                         color: Color(0xFFF2F2F2))),
                                 SizedBox(height: 24.h),
-                                ...[
-                                  'Home',
-                                  'About Us',
-                                  'Forums',
-                                  'Contact Us',
-                                  'RFP'
-                                ].map((item) => Padding(
-                                      padding: EdgeInsets.only(bottom: 24.h),
-                                      child: Text(item,
-                                          style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 20.sp,
-                                              color: Color(0xFFEBE6DC))),
-                                    )),
+                                Padding(
+  padding: EdgeInsets.only(bottom: 24.h),
+  child: Text('Home',
+      style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w400,
+          fontSize: 20.sp,
+          color: Color(0xFFEBE6DC))),
+),
+Padding(
+  padding: EdgeInsets.only(bottom: 24.h),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const MembershipPage(),
+        ),
+      );
+    },
+    child: Text('About Us',
+        style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            fontSize: 20.sp,
+            color: Color(0xFFEBE6DC),
+            decoration: TextDecoration.underline)),
+  ),
+),
+Padding(
+  padding: EdgeInsets.only(bottom: 24.h),
+  child: Text('Forums',
+      style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w400,
+          fontSize: 20.sp,
+          color: Color(0xFFEBE6DC))),
+),
+Padding(
+  padding: EdgeInsets.only(bottom: 24.h),
+  child: Text('Contact Us',
+      style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w400,
+          fontSize: 20.sp,
+          color: Color(0xFFEBE6DC))),
+),
+Padding(
+  padding: EdgeInsets.only(bottom: 24.h),
+  child: Text('RFP',
+      style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.w400,
+          fontSize: 20.sp,
+          color: Color(0xFFEBE6DC))),
+),
                               ],
                             ),
                           ),
