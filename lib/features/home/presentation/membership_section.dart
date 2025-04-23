@@ -237,67 +237,74 @@ class _MembershipCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Row: Icon + Price
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Title
+          //title and desc in column
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 90.w,
-                height: 90.w,
-                child: Image.asset(data['icon'], fit: BoxFit.contain),
+              // Top Row: Icon + Price
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 90.w,
+                    height: 90.w,
+                    child: Image.asset(data['icon'], fit: BoxFit.contain),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: data['price'] == '\u0000'
+                              ? ''
+                              : '\$${data['price']}',
+                          style: TextStyle(
+                            fontFamily: 'Basement Grotesque',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 36.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                        TextSpan(
+                          text: data['priceLabel'],
+                          style: TextStyle(
+                            fontFamily: 'Basement Grotesque',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: data['price'] == '\u0000'
-                          ? ''
-                          : '\$${data['price']}',
-                      style: TextStyle(
-                        fontFamily: 'Basement Grotesque',
-                        fontWeight: FontWeight.w800,
-                        fontSize: 36.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextSpan(
-                      text: data['priceLabel'],
-                      style: TextStyle(
-                        fontFamily: 'Basement Grotesque',
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+              SizedBox(height: 24.h),
+              Text(
+                data['title'],
+                style: TextStyle(
+                  fontFamily: 'Basement Grotesque',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 36.sp,
+                  color: data['titleColor'],
+                ),
+              ),
+              SizedBox(height: 12.h),
+              // Description
+              Text(
+                data['desc'],
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12.sp,
+                  color: const Color(0xFFEBE6DC),
                 ),
               ),
             ],
-          ),
-          SizedBox(height: 24.h),
-          // Title
-          Text(
-            data['title'],
-            style: TextStyle(
-              fontFamily: 'Basement Grotesque',
-              fontWeight: FontWeight.w800,
-              fontSize: 36.sp,
-              color: data['titleColor'],
-            ),
-          ),
-          SizedBox(height: 12.h),
-          // Description
-          Text(
-            data['desc'],
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w400,
-              fontSize: 12.sp,
-              color: const Color(0xFFEBE6DC),
-            ),
           ),
           SizedBox(height: 24.h),
           // Features
@@ -309,8 +316,7 @@ class _MembershipCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('• ',
-                      style:
-                          TextStyle(color: Colors.white, fontSize: 20)),
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
                   Expanded(
                     child: Text(
                       data['features'][i],

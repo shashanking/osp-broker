@@ -15,7 +15,7 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'hero_section_visibility_wrapper.dart';
 import 'widgets/navbar.dart';
-import 'sections.dart';
+import 'auction_sections.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

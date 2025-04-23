@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../menu_page.dart';
 
 class AppNavBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -144,31 +145,45 @@ class _ProfileMenu extends StatelessWidget {
   }
 }
 
+
+
 class _MenuButton extends StatelessWidget {
+  const _MenuButton({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 141,
-      height: 52,
-      decoration: BoxDecoration(
-        color: const Color(0xFF25B4DC),
-        borderRadius: BorderRadius.circular(49),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.menu, color: Color(0xFF333333), size: 24),
-          SizedBox(width: 10),
-          Text(
-            'Menu',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-              color: Colors.black,
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) => const MenuPage(),
           ),
-        ],
+        );
+      },
+      child: Container(
+        width: 141,
+        height: 52,
+        decoration: BoxDecoration(
+          color: const Color(0xFF25B4DC),
+          borderRadius: BorderRadius.circular(49),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.menu, color: Color(0xFF333333), size: 24),
+            SizedBox(width: 10),
+            Text(
+              'Menu',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
