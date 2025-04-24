@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
 
 class MembershipSection extends StatelessWidget {
   const MembershipSection({super.key});
@@ -363,7 +364,14 @@ class _MembershipCard extends StatelessWidget {
                     fontSize: 20.sp,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MembershipHeroSection(),
+                    ),
+                  );
+                },
                 child: const Text('Start Now!'),
               ),
             ),
