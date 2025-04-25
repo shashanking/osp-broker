@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:osp_broker/core/theme/app_colors.dart';
 import 'package:osp_broker/core/theme/app_text_styles.dart';
 import 'package:osp_broker/core/theme/app_gradients.dart';
+import '../../contactUs/presentations/contact_us_page.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection();
@@ -245,20 +246,41 @@ class FooterSection extends StatelessWidget {
                                         color: Color(0xFFF2F2F2))),
                                 SizedBox(height: 24.h),
                                 ...[
-                                  'Home',
+                                  ...['Home',
                                   'About Us',
                                   'Forums',
                                   'Contact Us',
                                   'RFP'
                                 ].map((item) => Padding(
                                       padding: EdgeInsets.only(bottom: 24.h),
-                                      child: Text(item,
-                                          style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 20.sp,
-                                              color: Color(0xFFEBE6DC))),
-                                    )),
+                                      child: item == 'Contact Us'
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const ContactUsPage(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Text(
+                                                item,
+                                                style: TextStyle(
+                                                    fontFamily: 'Montserrat',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 20.sp,
+                                                    color: Color(0xFFEBE6DC)),
+                                              ),
+                                            )
+                                          : Text(
+                                              item,
+                                              style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 20.sp,
+                                                  color: Color(0xFFEBE6DC)),
+                                            ),
+                                    ))],
                               ],
                             ),
                           ),

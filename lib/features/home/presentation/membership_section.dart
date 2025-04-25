@@ -364,14 +364,7 @@ class _MembershipCard extends StatelessWidget {
                     fontSize: 20.sp,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MembershipHeroSection(),
-                    ),
-                  );
-                },
+                onPressed: () {},
                 child: const Text('Start Now!'),
               ),
             ),

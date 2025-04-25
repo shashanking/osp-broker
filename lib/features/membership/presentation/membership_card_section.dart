@@ -245,14 +245,15 @@ Widget _buildMembershipCard(
 
 }) {
   return Container(
-    width: 300.w,
-    constraints: BoxConstraints(minHeight: 100.h),
+    width: 515.w,
+    constraints: BoxConstraints(minHeight: 715.h,maxWidth: 515.w),
     margin: EdgeInsets.symmetric(vertical: 6.h),
     padding: EdgeInsets.all(24.w),
     decoration: BoxDecoration(
       gradient: gradient,
       color: gradient == null ? Colors.white : null,
-      borderRadius: BorderRadius.circular(20.r),
+      borderRadius: BorderRadius.circular(32.r),
+      border: Border.all(color: Colors.black.withOpacity(0.05), width: 1),
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.08),
@@ -266,106 +267,126 @@ Widget _buildMembershipCard(
       ),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            badge,
-            const SizedBox(width: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                badge,
+                const SizedBox(width: 8),
+                Expanded(child: Container()),
+                if (title == 'Free')
+                  Text(
+                    '\u0000',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24.sp,
+                      color: Colors.black,
+                    ),
+                  )
+                else
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        _getPrice(title),
+                        style: TextStyle(
+                          fontFamily: 'Basement Grotesque',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 28.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        '/month',
+                        style: TextStyle(
+                          fontFamily: 'Basement Grotesque',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 14.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+            SizedBox(height: 16.h),
             Text(
               title,
               style: TextStyle(
                 fontFamily: 'Basement Grotesque',
                 fontWeight: FontWeight.w800,
-                fontSize: 24.sp,
+                fontSize: 22.sp,
                 color: Colors.black,
               ),
             ),
-            const Spacer(),
-            if (title == 'Free')
-              Text(
-                ' ',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24.sp,
-                  color: Colors.black,
-                ),
-              )
-            else
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: _getPrice(title),
-                      style: TextStyle(
-                        fontFamily: 'Basement Grotesque',
-                        fontWeight: FontWeight.w800,
-                        fontSize: 28.sp,
-                        color: Colors.black,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '/month',
-                      style: TextStyle(
-                        fontFamily: 'Basement Grotesque',
-                        fontWeight: FontWeight.w800,
-                        fontSize: 14.sp,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
-        SizedBox(height: 8.h),
-        Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit Integer.',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        ...features.map((f) => Padding(
-              padding: EdgeInsets.only(bottom: 4.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('• ', style: TextStyle(color: Colors.black)),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Text(
-                      f,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-        SizedBox(height: 16.h),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFFC107),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.r),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12.h),
-            ),
-            onPressed: () {},
-            child: const Text(
-              'Start Now!',
+            SizedBox(height: 8.h),
+            Text(
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit Integer.',
               style: TextStyle(
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            ...features.map((f) => Padding(
+                  padding: EdgeInsets.only(bottom: 4.h),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('• ', style: TextStyle(color: Colors.black)),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(
+                          f,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFECC733),
+                  Color(0xFFD49823),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'Start Now!',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),
@@ -405,8 +426,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.free() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/free.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Colors.black,
@@ -414,8 +435,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.bronze() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/bronze.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Color(0xFFB87333),
@@ -423,8 +444,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.silver() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/silver.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Color(0xFFC0C0C0),
@@ -432,8 +453,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.gold() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/gold.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Color(0xFFFFD700),
@@ -441,8 +462,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.platinum() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/platinum.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Color(0xFFB2EBF2),
@@ -450,8 +471,8 @@ class _Badge extends StatelessWidget {
   factory _Badge.diamond() => _Badge(
       icon: Image.asset(
         'assets/icons/membership/diamond.png',
-        width: 28,
-        height: 28,
+        width: 68,
+        height: 68,
         fit: BoxFit.contain,
       ),
       color: Color(0xFF40C4FF),
