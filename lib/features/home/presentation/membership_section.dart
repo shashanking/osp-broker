@@ -7,7 +7,7 @@ class MembershipSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final memberships = [
+    final List<Map<String, dynamic>> memberships = [
       {
         'icon': 'assets/icons/membership/free.png',
         'title': 'Free',

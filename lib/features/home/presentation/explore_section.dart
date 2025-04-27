@@ -5,7 +5,7 @@ import 'package:osp_broker/core/theme/app_text_styles.dart';
 import 'package:osp_broker/core/theme/app_gradients.dart';
 
 class ExploreSection extends StatelessWidget {
-  const ExploreSection();
+  const ExploreSection({super.key});
 
   @override
   Widget build(BuildContext context) {
