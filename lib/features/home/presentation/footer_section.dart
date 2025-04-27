@@ -478,4 +478,3 @@ class _FooterSocialIcon extends StatelessWidget {
     );
   }
 }
-// end of footer section
