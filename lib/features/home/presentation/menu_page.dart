@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
 
 class MenuPage extends StatelessWidget {
   final VoidCallback? onClose;
@@ -69,10 +70,29 @@ class MenuPage extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(menuItems2.length, (i) => _MenuItem(
-                            label: menuItems2[i],
-                            isActive: menuItems2[i] == 'BUSINESS MEMBER PAGES',
-                          )),
+                          children: List.generate(menuItems2.length, (i) {
+                            if (menuItems2[i] == 'MEMBER LISTS') {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MembershipHeroSection(),
+                                    ),
+                                  );
+                                },
+                                child: _MenuItem(
+                                  label: menuItems2[i],
+                                  isActive: false,
+                                ),
+                              );
+                            } else {
+                              return _MenuItem(
+                                label: menuItems2[i],
+                                isActive: menuItems2[i] == 'BUSINESS MEMBER PAGES',
+                              );
+                            }
+                          }),
                         ),
                       ),
                     ],

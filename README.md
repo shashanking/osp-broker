@@ -69,13 +69,38 @@ class ShopState with _$ShopState {
     - hive_flutter (for local storage),
     - dio_exceptions,
 
+## Contact Us Page (New)
+
+A new responsive **Contact Us** page has been added to the project, closely following the provided Figma design template.
+
+### Features:
+- Modern hero image with right-to-left gradient overlay and responsive max width/height.
+- Clean, two-column layout:
+  - **Left:** Contact form (First Name, Last Name, Phone, Email, Subject, Message, Send button)
+  - **Right:** Contact info cards (Call, Email, Chat Support)
+- Divider between columns: 4-6px wide with a vertical gradient (#15A5CD → transparent), full height of the section.
+- All button and divider colors match the Figma design.
+- Fully responsive for large and small PC screens.
+- Uses custom font and consistent spacing for a professional look.
+
+### File locations:
+- Main page: `lib/features/contactUs/presentations/contact_us_page.dart`
+- Section widget: `lib/features/contactUs/presentations/contact_us_section.dart`
+
+### How to use:
+- The Contact Us page is linked from the footer and can be navigated to from anywhere in the app.
+- You can further customize the form or info sections as needed.
+
+### Design Reference:
+- [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 - figma design https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0
-
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
