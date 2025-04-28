@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osp_broker/features/authentication/presentations/signup_page.dart';
 
 class Auction {
   final String imageUrl;
@@ -150,6 +151,8 @@ class AuctionsSection extends StatelessWidget {
 
   static const Color bgColor = Color(0xFFEBE6DC);
 
+  
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -226,7 +229,14 @@ class AuctionsSection extends StatelessWidget {
                               ),
                               elevation: 0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignupPage(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'View All',
                               style: TextStyle(
