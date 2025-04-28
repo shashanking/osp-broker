@@ -1,8 +1,5 @@
-// Moved from features/home/presentation/widgets/navbar.dart
-// This is now a core widget for use across the app.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../features/home/presentation/menu_page.dart';
 
 class AppNavBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -49,12 +46,49 @@ class AppNavBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
+class _NavButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  final Color color;
+  final Color textColor;
+  const _NavButton({
+    required this.label,
+    required this.onTap,
+    this.color = const Color(0xFF24439B),
+    this.textColor = const Color(0xFFEBE6DC),
+  });
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Basement Grotesque',
+            fontWeight: FontWeight.w800,
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _CircleIcon extends StatelessWidget {
   final IconData icon;
   final Color background;
   final Color iconColor;
-  const _CircleIcon({required this.icon, required this.background, required this.iconColor});
-
+  const _CircleIcon({
+    required this.icon,
+    required this.background,
+    required this.iconColor,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,9 +106,46 @@ class _CircleIcon extends StatelessWidget {
 class _ProfileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Icon(Icons.account_circle, color: Colors.black87, size: 40);
+    return Row(
+      children: [
+        Container(
+          width: 52,
+          height: 52,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF24439B), Color(0xFF15A5CD)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(32)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: CircleAvatar(
+              backgroundImage: AssetImage('assets/images/profile.png'),
+              radius: 22,
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Text(
+          'Jeremy Warner',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w800,
+            fontSize: 20,
+            color: Color(0xFF121212),
+          ),
+        ),
+        const SizedBox(width: 10),
+        const Icon(Icons.keyboard_arrow_down,
+            color: Color(0xFF121212), size: 24),
+      ],
+    );
   }
 }
+
+
 
 class _MenuButton extends StatelessWidget {
   const _MenuButton({Key? key}) : super(key: key);
@@ -86,7 +157,7 @@ class _MenuButton extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             fullscreenDialog: true,
-            builder: (context) => const Placeholder(), // Replace with menu page
+            builder: (context) => const MenuPage(),
           ),
         );
       },

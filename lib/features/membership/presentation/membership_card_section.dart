@@ -56,14 +56,14 @@ class MembershipCardSection extends StatelessWidget {
               final cardWidth = (constraints.maxWidth - 80.w) / 3;
               return Center(
                 child: SizedBox(
-                  width: cardWidth * 3 + 48.w,
+                  width: cardWidth * 3 + 100.w,
                   child: GridView.count(
                     crossAxisCount: 3,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 24.w,
                     mainAxisSpacing: 32.h,
-                    childAspectRatio: cardWidth / 400.h,
+                    childAspectRatio: cardWidth / 550.h,
                     children: [
                       _buildMembershipCard(
                         context,
@@ -242,11 +242,10 @@ Widget _buildMembershipCard(
   String? cost,
   String? costLabel,
   Gradient? gradient,
-
 }) {
   return Container(
     width: 515.w,
-    constraints: BoxConstraints(minHeight: 715.h,maxWidth: 515.w),
+    constraints: BoxConstraints(minHeight: 715.h, maxWidth: 515.w),
     margin: EdgeInsets.symmetric(vertical: 6.h),
     padding: EdgeInsets.all(24.w),
     decoration: BoxDecoration(
@@ -346,7 +345,7 @@ Widget _buildMembershipCard(
                           f,
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 14.sp,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

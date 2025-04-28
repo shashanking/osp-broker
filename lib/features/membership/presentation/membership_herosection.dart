@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../home/presentation/widgets/navbar.dart';
+import '../../../core/widgets/navbar.dart';
 import 'membership_card_section.dart';
-import '../../home/presentation/footer_section.dart';
+import '../../../core/widgets/footer_section.dart';
 
 class MembershipHeroSection extends StatelessWidget {
   const MembershipHeroSection({super.key});

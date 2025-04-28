@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:osp_broker/features/home/presentation/footer_section.dart';
-import '../../home/presentation/widgets/navbar.dart';
+import 'package:osp_broker/core/widgets/footer_section.dart';
+import '../../../core/widgets/navbar.dart';
 import 'contact_us_section.dart';
 
 class ContactUsPage extends StatelessWidget {
