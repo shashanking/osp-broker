@@ -69,6 +69,36 @@ class ShopState with _$ShopState {
     - hive_flutter (for local storage),
     - dio_exceptions,
 
+## Authentication Pages Update (2025-04-28)
+
+### New Features & Enhancements
+
+#### Login Page
+- Modern login page matching the latest design (see Figma reference).
+- Includes user/business toggle, email and password fields, and social login buttons (Google, Apple, Facebook).
+- Password field has a visibility toggle (eye icon).
+- "Login" button and navigation to Signup for new users.
+- File location: `lib/features/authentication/presentations/login_page.dart`
+- The RFP (Request For Pricing) button on the homepage now navigates to the Login Page.
+
+#### Signup Page
+- Enhanced signup page with clean, rounded input fields and labels above each field.
+- Password and confirm password fields have a visibility toggle.
+- Date of Birth (DOB) field opens a calendar picker and only accepts date input (read-only, no manual entry).
+- Phone number field only accepts numeric input.
+- Social login buttons styled and spaced as per design.
+- File location: `lib/features/authentication/presentations/signup_page.dart`
+
+#### How to Use
+- The Login Page is shown when clicking the RFP button in the homepage landing section.
+- Both Login and Signup pages are fully responsive and use consistent custom fonts and spacing.
+- All fields are validated for correct input types (numeric for phone, date for DOB, etc.).
+
+#### Design Reference
+- [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
+
+---
+
 ## Contact Us Page (New)
 
 A new responsive **Contact Us** page has been added to the project, closely following the provided Figma design template.
