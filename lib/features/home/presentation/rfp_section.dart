@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:osp_broker/features/authentication/presentations/login_page.dart';
+import 'package:osp_broker/features/rfp/presentations/rfp_page.dart';
 
 class RFPSection extends StatelessWidget {
   const RFPSection({super.key});
@@ -125,10 +125,11 @@ class RFPSection extends StatelessWidget {
                                     horizontal: 48.w, vertical: 10.h),
                               ),
                               onPressed: () {
-  Navigator.of(context).push(
-    MaterialPageRoute(builder: (context) => const LoginPage()),
-  );
-},
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const RfpPage()),
+                                );
+                              },
                               child: ShaderMask(
                                 shaderCallback: (Rect bounds) {
                                   return const LinearGradient(

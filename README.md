@@ -125,6 +125,37 @@ A new responsive **Contact Us** page has been added to the project, closely foll
 - [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
 
 
+## RFP (Request For Pricing) Page & Track Section (2025-04-29)
+
+A new, fully responsive **RFP Page** and **RFP Track Section** have been added, closely following the provided design screenshots and Figma references.
+
+### Features:
+- **Hero Section** with:
+  - Custom rectangular hero background (`assets/images/RFP_Hero_img.png`) with a linear gradient overlay.
+  - Right-aligned circular image (`assets/images/RFP_Hero_circular_img.png`).
+  - Large, bold headline, description, and "Create Pricing" button.
+  - Uses the shared AppNavBar at the top and FooterSection at the bottom.
+- **Track Section** visually illustrates the RFP process:
+  - Background image: `assets/images/RFP_Track_Img_bg.png`
+  - Foreground steps image: `assets/images/RFP_Track_Img.png`
+  - Both images are layered using a Stack and sized responsively (1800.w width).
+- All sections are fully responsive and use the Basement Grotesque custom font for headings.
+
+### File locations:
+- Main RFP page: `lib/features/rfp/presentations/rfp_page.dart`
+- Track section: `lib/features/rfp/presentations/rfp_track_section.dart`
+- Footer: `lib/features/home/presentation/footer_section.dart`
+
+### How to use:
+- The RFP page can be navigated to from the "Create Pricing" or RFP-related buttons in the app.
+- The page includes the hero, track, and footer sections in order.
+- All assets should be placed in the `assets/images/` directory as referenced above.
+- You can further customize the layout, add interactivity, or overlay widgets as needed.
+
+### Design Reference:
+- [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

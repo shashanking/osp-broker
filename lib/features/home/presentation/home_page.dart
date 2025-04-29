@@ -16,6 +16,8 @@ import 'package:visibility_detector/visibility_detector.dart';
 import 'hero_section_visibility_wrapper.dart';
 import 'widgets/navbar.dart';
 import 'auction_sections.dart';
+import 'package:osp_broker/features/authentication/presentations/login_page.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -333,7 +335,11 @@ class HeroSection extends StatelessWidget {
                   label: 'RFP',
                   background: AppColors.dark,
                   width: 472, // full width of the content box
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                  },
                 ),
               ],
             ),
