@@ -69,6 +69,36 @@ class ShopState with _$ShopState {
     - hive_flutter (for local storage),
     - dio_exceptions,
 
+## Authentication Pages Update (2025-04-28)
+
+### New Features & Enhancements
+
+#### Login Page
+- Modern login page matching the latest design (see Figma reference).
+- Includes user/business toggle, email and password fields, and social login buttons (Google, Apple, Facebook).
+- Password field has a visibility toggle (eye icon).
+- "Login" button and navigation to Signup for new users.
+- File location: `lib/features/authentication/presentations/login_page.dart`
+- The RFP (Request For Pricing) button on the homepage now navigates to the Login Page.
+
+#### Signup Page
+- Enhanced signup page with clean, rounded input fields and labels above each field.
+- Password and confirm password fields have a visibility toggle.
+- Date of Birth (DOB) field opens a calendar picker and only accepts date input (read-only, no manual entry).
+- Phone number field only accepts numeric input.
+- Social login buttons styled and spaced as per design.
+- File location: `lib/features/authentication/presentations/signup_page.dart`
+
+#### How to Use
+- The Login Page is shown when clicking the RFP button in the homepage landing section.
+- Both Login and Signup pages are fully responsive and use consistent custom fonts and spacing.
+- All fields are validated for correct input types (numeric for phone, date for DOB, etc.).
+
+#### Design Reference
+- [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
+
+---
+
 ## Contact Us Page (New)
 
 A new responsive **Contact Us** page has been added to the project, closely following the provided Figma design template.
@@ -90,6 +120,37 @@ A new responsive **Contact Us** page has been added to the project, closely foll
 ### How to use:
 - The Contact Us page is linked from the footer and can be navigated to from anywhere in the app.
 - You can further customize the form or info sections as needed.
+
+### Design Reference:
+- [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
+
+
+## RFP (Request For Pricing) Page & Track Section (2025-04-29)
+
+A new, fully responsive **RFP Page** and **RFP Track Section** have been added, closely following the provided design screenshots and Figma references.
+
+### Features:
+- **Hero Section** with:
+  - Custom rectangular hero background (`assets/images/RFP_Hero_img.png`) with a linear gradient overlay.
+  - Right-aligned circular image (`assets/images/RFP_Hero_circular_img.png`).
+  - Large, bold headline, description, and "Create Pricing" button.
+  - Uses the shared AppNavBar at the top and FooterSection at the bottom.
+- **Track Section** visually illustrates the RFP process:
+  - Background image: `assets/images/RFP_Track_Img_bg.png`
+  - Foreground steps image: `assets/images/RFP_Track_Img.png`
+  - Both images are layered using a Stack and sized responsively (1800.w width).
+- All sections are fully responsive and use the Basement Grotesque custom font for headings.
+
+### File locations:
+- Main RFP page: `lib/features/rfp/presentations/rfp_page.dart`
+- Track section: `lib/features/rfp/presentations/rfp_track_section.dart`
+- Footer: `lib/features/home/presentation/footer_section.dart`
+
+### How to use:
+- The RFP page can be navigated to from the "Create Pricing" or RFP-related buttons in the app.
+- The page includes the hero, track, and footer sections in order.
+- All assets should be placed in the `assets/images/` directory as referenced above.
+- You can further customize the layout, add interactivity, or overlay widgets as needed.
 
 ### Design Reference:
 - [Figma Design](https://www.figma.com/design/fiOXqEiC0hnzWHCDHYMWrX/Website-Design?node-id=25-2672&p=f&t=QCUazz2ykXFNL9ys-0)
