@@ -95,7 +95,7 @@ class _TestimonialSectionState extends State<TestimonialSection> {
             top: (1080.h - 402.h) / 2,
             child: SizedBox(
               width: 3 * 440.w + 2 * 48.w,
-              height: 402.h,
+              height: 450.h,
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: testimonials.length,
@@ -225,12 +225,12 @@ class _TestimonialSectionState extends State<TestimonialSection> {
             top: (1080.h - 342.h) / 2,
             child: SizedBox(
               width: 533.w,
-              height: 342.h,
+              // height: 342.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 230.h,
+                    // height: 230.h,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

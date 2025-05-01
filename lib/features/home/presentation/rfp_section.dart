@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:osp_broker/features/rfp/presentations/rfp_page.dart';
+import 'package:go_router/go_router.dart';
+
 
 class RFPSection extends StatelessWidget {
   const RFPSection({super.key});
@@ -125,10 +127,7 @@ class RFPSection extends StatelessWidget {
                                     horizontal: 48.w, vertical: 10.h),
                               ),
                               onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => const RfpPage()),
-                                );
+                                context.go('/rfp');
                               },
                               child: ShaderMask(
                                 shaderCallback: (Rect bounds) {

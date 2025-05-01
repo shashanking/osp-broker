@@ -90,7 +90,7 @@ class ExploreSection extends StatelessWidget {
             top: (1080.h - 288.h) / 2,
             child: SizedBox(
               width: 672.w,
-              height: 288.h,
+              // height: 288.h,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
