@@ -15,10 +15,23 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuItems1 = [
-      'HOME', 'ABOUT US', 'AUCTIONS', 'RFP', 'PRODUCT SHOP', 'PLATFORM SHOP', 'SERVICE SHOP', 'ANNOUNCEMENTS'
+      'HOME',
+      'ABOUT US',
+      'AUCTIONS',
+      'RFP',
+      'PRODUCT SHOP',
+      'PLATFORM SHOP',
+      'SERVICE SHOP',
+      'ANNOUNCEMENTS'
     ];
     final menuItems2 = [
-      'FORUMS', 'GIFT SHOP', 'BLOG', 'OSP DIRECTORY', 'MEMBER LISTS', 'BUSINESS MEMBER PAGES', 'GAMES'
+      'FORUMS',
+      'GIFT SHOP',
+      'BLOG',
+      'OSP DIRECTORY',
+      'MEMBER LISTS',
+      'BUSINESS MEMBER PAGES',
+      'GAMES'
     ];
     return Scaffold(
       backgroundColor: bgColor,
@@ -50,7 +63,8 @@ class MenuPage extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 140.w, top: 138.h, bottom: 138.h, right: 60.w),
+                  padding: EdgeInsets.only(
+                      left: 140.w, top: 138.h, bottom: 138.h, right: 60.w),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -58,10 +72,12 @@ class MenuPage extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(menuItems1.length, (i) => _MenuItem(
-                            label: menuItems1[i],
-                            isActive: i == 0, // HOME
-                          )),
+                          children: List.generate(
+                              menuItems1.length,
+                              (i) => _MenuItem(
+                                    label: menuItems1[i],
+                                    isActive: i == 0, // HOME
+                                  )),
                         ),
                       ),
                       SizedBox(width: 40.w),
@@ -83,7 +99,8 @@ class MenuPage extends StatelessWidget {
                             } else {
                               return _MenuItem(
                                 label: menuItems2[i],
-                                isActive: menuItems2[i] == 'BUSINESS MEMBER PAGES',
+                                isActive:
+                                    menuItems2[i] == 'BUSINESS MEMBER PAGES',
                               );
                             }
                           }),
@@ -116,9 +133,11 @@ class MenuPage extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.close, color: rightPanelColor, size: 24.w),
+                              Icon(Icons.close,
+                                  color: rightPanelColor, size: 24.w),
                               SizedBox(width: 10.w),
-                              Text('Menu',
+                              Text(
+                                'Menu',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w500,
@@ -161,7 +180,8 @@ class MenuPage extends StatelessWidget {
                           SizedBox(height: 20.h),
                           _ContactRow(
                             icon: Icons.location_on,
-                            text: 'Lorem ipsum dolor sit amet,orem ipsum dolor sit amet,',
+                            text:
+                                'Lorem ipsum dolor sit amet,orem ipsum dolor sit amet,',
                             multiLine: true,
                           ),
                         ],
@@ -179,11 +199,13 @@ class MenuPage extends StatelessWidget {
                             height: 52.h,
                             child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
-                                side: const BorderSide(color: bgColor, width: 2),
+                                side:
+                                    const BorderSide(color: bgColor, width: 2),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.r),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 40.w),
                               ),
                               onPressed: () {},
                               child: Text(
@@ -207,7 +229,8 @@ class MenuPage extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50.r),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40.w),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.h, horizontal: 40.w),
                               ),
                               onPressed: () {},
                               child: Text(
@@ -247,9 +270,8 @@ class _MenuItem extends StatelessWidget {
       height: 72.h,
       decoration: BoxDecoration(
         color: isActive ? MenuPage.highlightColor : MenuPage.bgColor,
-        border: isActive
-            ? null
-            : Border.all(color: MenuPage.borderColor, width: 1),
+        border:
+            isActive ? null : Border.all(color: MenuPage.borderColor, width: 1),
         borderRadius: BorderRadius.circular(61.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 0),
@@ -271,7 +293,8 @@ class _ContactRow extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool multiLine;
-  const _ContactRow({required this.icon, required this.text, this.multiLine = false});
+  const _ContactRow(
+      {required this.icon, required this.text, this.multiLine = false});
 
   @override
   Widget build(BuildContext context) {
@@ -297,4 +320,3 @@ class _ContactRow extends StatelessWidget {
     );
   }
 }
-

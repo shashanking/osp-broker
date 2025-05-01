@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:osp_broker/core/constants/app_constants.dart';
+import 'package:osp_broker/core/theme/app_colors.dart';
 import '../../menu/application/menu_notifier.dart';
+import '../../menu/presentation/_contact_row.dart';
 
 class MenuPage extends ConsumerWidget {
   final VoidCallback? onClose;
@@ -115,21 +117,143 @@ class MenuPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              // Right panel (optional, can add content here)
+              // Right panel
               Expanded(
                 flex: 1,
                 child: Container(
                   color: rightPanelColor,
-                  child: Center(
-                    child: Text(
-                      AppConstants.tagline,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28.sp,
-                        color: Colors.white,
+                  child: Stack(
+                    children: [
+                      // Close button
+                      Positioned(
+                        top: 32.h,
+                        right: 48.w,
+                        child: GestureDetector(
+                          onTap: onClose ?? () => Navigator.of(context).pop(),
+                          child: Container(
+                            width: 141.w,
+                            height: 52.h,
+                            decoration: BoxDecoration(
+                              color: AppColors.background,
+                              borderRadius: BorderRadius.circular(49.r),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.close, color: rightPanelColor, size: 24.w),
+                                SizedBox(width: 10.w),
+                                Text(
+                                  'Menu',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20.sp,
+                                    color: rightPanelColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      // Contact Info
+                      Positioned(
+                        left: 48.w,
+                        top: 220.h,
+                        right: 48.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Get in touch',
+                              style: TextStyle(
+                                fontFamily: 'Basement Grotesque',
+                                fontWeight: FontWeight.w800,
+                                fontSize: 40.sp,
+                                color: AppColors.menuText,
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+                            ContactRow(
+                              icon: Icons.phone,
+                              text: GetintouchConstants.phone,
+                            ),
+                            SizedBox(height: 20.h),
+                            ContactRow(
+                              icon: Icons.email,
+                              text: GetintouchConstants.email,
+                            ),
+                            SizedBox(height: 20.h),
+                            ContactRow(
+                              icon: Icons.location_on,
+                              text: GetintouchConstants.address,
+                              multiLine: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Buttons
+                      Positioned(
+                        left: 48.w,
+                        right: 48.w,
+                        bottom: 80.h,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              height: 52.h,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  side: BorderSide(color: AppColors.menuText, width: 2),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40.w),
+                                ),
+                                onPressed: () {
+                                  context.go('/signup');
+                                },
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20.sp,
+                                    color: AppColors.menuText,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 24.h),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 52.h,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.menuText,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50.r),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 40.w),
+                                ),
+                                onPressed: () {
+                                  context.go('/login');
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20.sp,
+                                    color: AppColors.dark,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
