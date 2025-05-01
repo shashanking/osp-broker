@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:osp_broker/core/constants/app_constants.dart';
 import '../../menu/application/menu_notifier.dart';
 
 class MenuPage extends ConsumerWidget {
@@ -121,7 +122,7 @@ class MenuPage extends ConsumerWidget {
                   color: rightPanelColor,
                   child: Center(
                     child: Text(
-                      'Welcome to OSP Brokers!',
+                      AppConstants.tagline,
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,

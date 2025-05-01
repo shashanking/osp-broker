@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:osp_broker/core/constants/app_constants.dart';
 import 'package:osp_broker/core/theme/app_colors.dart';
 import 'package:osp_broker/core/theme/app_text_styles.dart';
 import 'package:osp_broker/core/theme/app_gradients.dart';
@@ -7,12 +10,28 @@ import 'package:osp_broker/features/about-us/presentation/about_us_page.dart';
 
 import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
 import 'package:osp_broker/features/contactUs/presentations/contact_us_page.dart';
+import 'package:osp_broker/features/menu/application/menu_notifier.dart';
 
-class FooterSection extends StatelessWidget {
-  const FooterSection();
+class FooterSection extends ConsumerWidget {
+  const FooterSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+ final menuState = ref.watch(menuNotifierProvider);
+    final menuNotifier = ref.read(menuNotifierProvider.notifier);
+
+    final footerMenuItems = [
+      // {'label': 'HOME', 'route': '/'},
+      {'label': 'ABOUT US', 'route': '/about'},
+      // {'label': 'AUCTIONS', 'route': '/auctions'},
+      {'label': 'RFP', 'route': '/rfp'},
+      {'label': 'FORUMS', 'route': '/forums'},
+      {'label': 'CONTACT US', 'route': '/contact'},
+      {'label': 'MEMBERSHIP', 'route': '/membership'},
+    ];
+    
+
     return Container(
       width: 1.sw,
       height: 1032.h,
@@ -248,37 +267,24 @@ class FooterSection extends StatelessWidget {
                                         fontSize: 32.sp,
                                         color: Color(0xFFF2F2F2))),
                                 SizedBox(height: 24.h),
-                                ..._footerMenuItems.map((item) => Padding(
+                                ...footerMenuItems.map((item) => Padding(
                                   padding: EdgeInsets.only(bottom: 18.h),
-                                  child: item.pageBuilder != null
-                                      ? InkWell(
+                                  child: InkWell(
                                           onTap: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) => item.pageBuilder!(),
-                                              ),
-                                            );
+                                           menuNotifier.selectMenu(item['label']!);
+                                context.go(item['route']!);
                                           },
                                           child: Text(
-                                            item.label,
+                                            item['label']!,
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               fontWeight: FontWeight.w400,
                                               fontSize: 20.sp,
                                               color: Color(0xFFEBE6DC),
-                                              decoration: TextDecoration.underline,
                                             ),
                                           ),
                                         )
-                                      : Text(
-                                          item.label,
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 20.sp,
-                                            color: Color(0xFFEBE6DC),
-                                          ),
-                                        ),
+                                      
                                 )),
                               ],
                             ),
@@ -342,7 +348,7 @@ class FooterSection extends StatelessWidget {
                                     Icon(Icons.phone,
                                         color: Color(0xFFF2F2F2), size: 24.w),
                                     SizedBox(width: 16.w),
-                                    Text('+1 323-234-5812',
+                                    Text( GetintouchConstants.phone,
                                         style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w400,
@@ -357,7 +363,7 @@ class FooterSection extends StatelessWidget {
                                     Icon(Icons.email,
                                         color: Color(0xFFF2F2F2), size: 24.w),
                                     SizedBox(width: 16.w),
-                                    Text('example@gmail.com',
+                                    Text(GetintouchConstants.email,
                                         style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w400,
@@ -376,7 +382,7 @@ class FooterSection extends StatelessWidget {
                                     SizedBox(
                                       width: 263.w,
                                       child: Text(
-                                          'Lorem ipsum dolor sit amet, consectetur',
+                                          GetintouchConstants.address,
                                           style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               fontWeight: FontWeight.w400,

@@ -2,6 +2,7 @@
 
 class AppConstants {
   static const String appName = 'OSP Brokers';
+  static const String tagline = 'Welcome to OSP Brokers!';
   // Add more constants as needed
 }
 
@@ -14,8 +15,7 @@ class MenuConstants {
 }
 
 class GetintouchConstants {
-
-  static const String email = 'Email';
-  static const String phone = 'Phone';
-  static const String address = 'Address';
+  static const String email = 'example@gmail.com';
+  static const String phone = '+1 323-234-5812';
+  static const String address = 'Lorem ipsum dolor sit amet, consectetur';
 }
