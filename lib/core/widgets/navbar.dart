@@ -162,7 +162,7 @@ class _MenuButton extends StatelessWidget {
         context.go('/menu');
       },
       child: Container(
-        width: 180,
+        width: 120,
         height: 52,
         decoration: BoxDecoration(
           color: const Color(0xFF25B4DC),
@@ -182,23 +182,7 @@ class _MenuButton extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(width: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                activeMenu,
-                style: const TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  color: Color(0xFF24439B),
-                ),
-              ),
-            ),
+            // const SizedBox(width: 10),
           ],
         ),
       ),

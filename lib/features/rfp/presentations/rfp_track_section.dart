@@ -17,7 +17,7 @@ class RfpTrackSection extends StatelessWidget {
               // Background track image
               Positioned.fill(
                 child: Image.asset(
-                  'assets/images/RFP_Track_Img_bg.png',
+                  'assets/images/explore-bg.png',
                   fit: BoxFit.cover,
                   width: 1800.w,
                 ),
