@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuPage extends StatelessWidget {
   final VoidCallback? onClose;
@@ -74,12 +73,7 @@ class MenuPage extends StatelessWidget {
                             if (menuItems2[i] == 'MEMBER LISTS') {
                               return GestureDetector(
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => MembershipHeroSection(),
-                                    ),
-                                  );
+                                  context.go('/membership');
                                 },
                                 child: _MenuItem(
                                   label: menuItems2[i],

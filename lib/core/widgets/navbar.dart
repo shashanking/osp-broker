@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import '../../features/home/presentation/menu_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
+import '../../features/menu/application/menu_notifier.dart';
 
-class AppNavBar extends StatelessWidget implements PreferredSizeWidget {
+class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   final double height;
   final Color bgColor;
-  const AppNavBar({Key? key, this.height = 80, this.bgColor = Colors.transparent}) : super(key: key);
+  const AppNavBar(
+      {Key? key, this.height = 80, this.bgColor = Colors.transparent})
+      : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(height);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final menuState = ref.watch(menuNotifierProvider);
     return Container(
       height: height,
       color: bgColor,
@@ -37,7 +43,7 @@ class AppNavBar extends StatelessWidget implements PreferredSizeWidget {
               _ProfileMenu(),
               const SizedBox(width: 24),
               // Menu Button
-              _MenuButton(),
+              _MenuButton(activeMenu: menuState.selectedMenu),
             ],
           ),
         ],
@@ -145,24 +151,18 @@ class _ProfileMenu extends StatelessWidget {
   }
 }
 
-
-
 class _MenuButton extends StatelessWidget {
-  const _MenuButton({Key? key}) : super(key: key);
+  final String activeMenu;
+  const _MenuButton({Key? key, required this.activeMenu}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (context) => const MenuPage(),
-          ),
-        );
+        context.go('/menu');
       },
       child: Container(
-        width: 141,
+        width: 180,
         height: 52,
         decoration: BoxDecoration(
           color: const Color(0xFF25B4DC),
@@ -170,16 +170,33 @@ class _MenuButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(Icons.menu, color: Color(0xFF333333), size: 24),
-            SizedBox(width: 10),
-            Text(
+          children: [
+            const Icon(Icons.menu, color: Color(0xFF333333), size: 24),
+            const SizedBox(width: 10),
+            const Text(
               'Menu',
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
                 color: Colors.black,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                activeMenu,
+                style: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Color(0xFF24439B),
+                ),
               ),
             ),
           ],

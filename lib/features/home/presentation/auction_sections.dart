@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:osp_broker/features/authentication/presentations/signup_page.dart';
 
 class Auction {
@@ -230,12 +231,7 @@ class AuctionsSection extends StatelessWidget {
                               elevation: 0,
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignupPage(),
-                                ),
-                              );
+                              context.go('/signup');
                             },
                             child: Text(
                               'View All',
