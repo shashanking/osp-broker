@@ -129,7 +129,7 @@ class MenuPage extends ConsumerWidget {
                         top: 32.h,
                         right: 48.w,
                         child: GestureDetector(
-                          onTap: onClose ?? () => Navigator.of(context).pop(),
+                          onTap: onClose ?? () => context.pop(),
                           child: Container(
                             width: 141.w,
                             height: 52.h,

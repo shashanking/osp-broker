@@ -29,7 +29,7 @@ class WhatWeOfferSection extends StatelessWidget {
         'icon': 'assets/icons/rfp.png',
         'title': 'Request For Pricing',
         'desc':
-            'Submit a Request for Proposal and connect with experienced professionals ready to meet your needs.',
+            'Submit a Request for Pricing and connect with experienced professionals ready to meet your needs.',
       },
     ];
 
