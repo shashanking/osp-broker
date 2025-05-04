@@ -206,7 +206,7 @@ class LoginPage extends StatelessWidget {
                           TextButton(
                             onPressed: () {},
                             child: Text(
-                              'Sgn Up',
+                              'Sign Up',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
@@ -377,7 +377,7 @@ class _SocialLoginButton extends StatelessWidget {
     required this.borderColor,
   });
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Container(
       height: 48.h,

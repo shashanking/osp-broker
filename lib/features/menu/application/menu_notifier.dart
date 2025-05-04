@@ -12,3 +12,4 @@ class MenuNotifier extends StateNotifier<MenuState> {
 final menuNotifierProvider = StateNotifierProvider<MenuNotifier, MenuState>((ref) {
   return MenuNotifier();
 });
+ 

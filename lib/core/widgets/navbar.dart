@@ -159,7 +159,7 @@ class _MenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/menu');
+        context.push('/menu');
       },
       child: Container(
         width: 120,
