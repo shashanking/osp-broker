@@ -8,3 +8,4 @@ class MenuState with _$MenuState {
     required String selectedMenu,
   }) = _MenuState;
 }
+ 

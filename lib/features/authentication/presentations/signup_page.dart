@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../application/auth_notifier.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
       body: Center(
@@ -156,7 +159,9 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'First Name', label: ''),
+                                        hint: 'First Name',
+                                        label: '',
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -172,7 +177,15 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'Enter Email ID', label: ''),
+                                        hint: 'Enter Email ID',
+                                        label: 'Email',
+                                        onChanged: (value) =>
+                                            ref.read(authNotifierProvider.notifier).setEmail(value),
+                                        errorText: authState.email.isNotEmpty &&
+                                                !authState.isEmailValid
+                                            ? 'Invalid email (must be @... and .com)'
+                                            : null,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -192,8 +205,15 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'Enter Phone Number',
-                                          label: ''),
+                                        hint: 'Enter Phone Number',
+                                        label: 'Phone',
+                                        onChanged: (value) =>
+                                            ref.read(authNotifierProvider.notifier).setPhone(value),
+                                        errorText: authState.phone.isNotEmpty &&
+                                                !authState.isPhoneValid
+                                            ? 'Phone must be 10 digits'
+                                            : null,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -209,9 +229,16 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'Enter Password',
-                                          label: '',
-                                          isPassword: true),
+                                        hint: 'Enter Password',
+                                        label: 'Password',
+                                        isPassword: true,
+                                        onChanged: (value) =>
+                                            ref.read(authNotifierProvider.notifier).setPassword(value),
+                                        errorText: authState.password.isNotEmpty &&
+                                                !authState.isPasswordValid
+                                            ? 'Passwords do not match'
+                                            : null,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -231,9 +258,16 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'Confirm Password',
-                                          label: '',
-                                          isPassword: true),
+                                        hint: 'Confirm Password',
+                                        label: 'Confirm Password',
+                                        isPassword: true,
+                                        onChanged: (value) =>
+                                            ref.read(authNotifierProvider.notifier).setConfirmPassword(value),
+                                        errorText: authState.confirmPassword.isNotEmpty &&
+                                                !authState.isPasswordValid
+                                            ? 'Passwords do not match'
+                                            : null,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -249,9 +283,10 @@ class SignupPage extends StatelessWidget {
                                               fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _SignupTextField(
-                                          hint: 'Enter Date of Birth',
-                                          label: '',
-                                          isDate: true),
+                                        hint: 'Enter Date of Birth',
+                                        label: 'Date of Birth',
+                                        isDate: true,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -277,7 +312,7 @@ class SignupPage extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: Text(
-                              'Login',
+                              'Sign Up',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
@@ -409,11 +444,15 @@ class _SignupTextField extends StatefulWidget {
   final String label;
   final bool isPassword;
   final bool isDate;
+  final void Function(String)? onChanged;
+  final String? errorText;
   const _SignupTextField({
     required this.hint,
     required this.label,
     this.isPassword = false,
     this.isDate = false,
+    this.onChanged,
+    this.errorText,
     Key? key,
   }) : super(key: key);
 
@@ -458,6 +497,7 @@ class _SignupTextFieldState extends State<_SignupTextField> {
         hintText: widget.hint,
         filled: true,
         fillColor: const Color.fromARGB(255, 255, 255, 255),
+        errorText: widget.errorText,
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
@@ -519,11 +559,10 @@ class _SignupTextFieldState extends State<_SignupTextField> {
               }
             }
           : null,
+      onChanged: widget.onChanged,
     );
   }
 }
-
-
 
 class _SocialLoginButton extends StatelessWidget {
   final String icon;
