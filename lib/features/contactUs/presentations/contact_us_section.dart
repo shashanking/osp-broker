@@ -15,16 +15,20 @@ class ContactUsSection extends StatelessWidget {
           colors: [
             Color(0xFF15A5CD),
             Color(0x0015A5CD),
-          ],
+          ], 
         ),
       ),
     );
     return Center(
+      
       child: Container(
         constraints: const BoxConstraints(maxWidth: 1200),
+       
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
         child: IntrinsicHeight(
+          
           child: Row(
+            
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
             // Left: Form

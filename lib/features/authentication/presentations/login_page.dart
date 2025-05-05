@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../application/auth_notifier.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
       body: Center(
@@ -14,7 +17,7 @@ class LoginPage extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 1600, maxHeight: 1000),
           margin: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFFEBE6DC),
             borderRadius: BorderRadius.circular(24.r),
           ),
           clipBehavior: Clip.antiAlias,
@@ -145,7 +148,12 @@ class LoginPage extends StatelessWidget {
                                     children: [
                                       Text('Email', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
-                                      _LoginTextField(hint: 'Enter Email ID', isPassword: false),
+                                      _LoginTextField(
+  hint: 'Enter Email ID',
+  isPassword: false,
+  errorText: !authState.isEmailValid && authState.email.isNotEmpty ? 'Please enter a valid email' : null,
+  onChanged: (val) => ref.read(authNotifierProvider.notifier).setEmail(val),
+),
                                     ],
                                   ),
                                 ),
@@ -176,7 +184,7 @@ class LoginPage extends StatelessWidget {
                               backgroundColor: const Color.fromRGBO(36, 67, 155, 1),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
+                                borderRadius: BorderRadius.circular(56.r),
                               ),
                             ),
                             onPressed: () {},
@@ -281,10 +289,10 @@ class _RoleToggleButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF242B9B) : Colors.white,
+        color: selected ? const Color(0xFF333333) : const Color(0xFFEBE6DC),
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: selected ? const Color(0xFF242B9B) : const Color(0xFFE0E0E0),
+          color: selected ? const Color(0xFF333333) : const Color(0xFFD9D9D9),
         ),
       ),
       child: Text(
@@ -303,7 +311,15 @@ class _RoleToggleButton extends StatelessWidget {
 class _LoginTextField extends StatefulWidget {
   final String hint;
   final bool isPassword;
-  const _LoginTextField({required this.hint, this.isPassword = false, Key? key}) : super(key: key);
+  final String? errorText;
+  final void Function(String)? onChanged;
+  const _LoginTextField({
+    required this.hint,
+    this.isPassword = false,
+    this.errorText,
+    this.onChanged,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<_LoginTextField> createState() => _LoginTextFieldState();
@@ -322,10 +338,12 @@ class _LoginTextFieldState extends State<_LoginTextField> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.isPassword ? _obscureText : false,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         hintText: widget.hint,
         filled: true,
-        fillColor: const Color.fromARGB(255, 255, 255, 255),
+        fillColor: const Color(0xFFEBE6DC),
+        errorText: widget.errorText,
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
@@ -342,15 +360,24 @@ class _LoginTextFieldState extends State<_LoginTextField> {
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
-          borderSide: const BorderSide(color: Color(0xFFD9D9D9), width: 1.5),
+          borderSide: BorderSide(
+            color: widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
+            width: 1.5,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
-          borderSide: const BorderSide(color: Color(0xFFD9D9D9), width: 1.5),
+          borderSide: BorderSide(
+            color: widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
+            width: 1.5,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
-          borderSide: const BorderSide(color: Color(0xFF242B9B), width: 1.5),
+          borderSide: BorderSide(
+            color: widget.errorText != null ? Colors.red : const Color(0xFF242B9B),
+            width: 1.5,
+          ),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
       ),
@@ -380,12 +407,12 @@ class _SocialLoginButton extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return Container(
-      height: 48.h,
-      width: 120.w,
+      height: 56.h,
+      width: 230.w,
       decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: borderColor),
+        color: const Color(0xFFEBE6DC),
+        borderRadius: BorderRadius.circular(56.r),
+        border: Border.all(color: const Color.fromARGB(255, 184, 183, 183)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

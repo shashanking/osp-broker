@@ -15,8 +15,8 @@ class ContactUsPage extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromRGBO(235, 230, 220, 1),
-            Color.fromRGBO(235, 230, 220, 1),
+            Color(0xFFEBE6DC),
+            Color(0xFFEBE6DC),
           ],
         ),
       ),

@@ -17,7 +17,7 @@ class SignupPage extends ConsumerWidget {
           constraints: const BoxConstraints(maxWidth: 1600, maxHeight: 1000),
           margin: EdgeInsets.symmetric(vertical: 40.h, horizontal: 16.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFFEBE6DC),
             borderRadius: BorderRadius.circular(24.r),
           ),
           clipBehavior: Clip.antiAlias,
@@ -307,7 +307,7 @@ class SignupPage extends ConsumerWidget {
                                   const Color.fromRGBO(36, 67, 155, 1),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
+                                borderRadius: BorderRadius.circular(56.r),
                               ),
                             ),
                             onPressed: () {},
@@ -420,10 +420,10 @@ class _RoleToggleButton extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF242B9B) : Colors.white,
+        color: selected ? const Color(0xFF333333) : const Color(0xFFEBE6DC),
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(
-          color: selected ? const Color(0xFF242B9B) : const Color(0xFFE0E0E0),
+          color: selected ? const Color(0xFF333333) : const Color(0xFFD9D9D9),
         ),
       ),
       child: Text(
@@ -496,7 +496,7 @@ class _SignupTextFieldState extends State<_SignupTextField> {
       decoration: InputDecoration(
         hintText: widget.hint,
         filled: true,
-        fillColor: const Color.fromARGB(255, 255, 255, 255),
+        fillColor: const Color(0xFFEBE6DC),
         errorText: widget.errorText,
         suffixIcon: widget.isPassword
             ? IconButton(
@@ -581,12 +581,12 @@ class _SocialLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48.h,
-      width: 120.w,
+      height: 56.h,
+      width: 230.w,
       decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: borderColor),
+        color:const Color(0xFFEBE6DC),
+        borderRadius: BorderRadius.circular(56.r),
+        border: Border.all(color: const Color.fromARGB(255, 189, 189, 189)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

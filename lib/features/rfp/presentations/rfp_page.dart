@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/widgets/navbar.dart';
 import 'rfp_track_section.dart';
+import 'rfp_form_section.dart';
 import '../../../core/widgets/footer_section.dart';
 
 class RfpPage extends StatelessWidget {
@@ -20,6 +21,7 @@ class RfpPage extends StatelessWidget {
               const AppNavBar(),
               _RfpHeroSection(),
               const RfpTrackSection(),
+              RfpFormSection(),
               FooterSection(),
             ],
           ),
