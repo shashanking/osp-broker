@@ -16,7 +16,7 @@ class ThreadPage extends StatelessWidget {
       backgroundColor: const Color(0xFFEBE6DC),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: [ 
           // Left Panel: Categories (reuse)
           SizedBox(
             width: 300.w,

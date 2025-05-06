@@ -18,7 +18,7 @@ class CategoriesList extends StatelessWidget {
               'jobs': Icons.groups,
               'Services': Icons.settings,
               'Machines': Icons.precision_manufacturing,
-              'Auctions': Icons.gavel,
+              'Auctions': Icons.gavel, 
             },
         super(key: key);
 

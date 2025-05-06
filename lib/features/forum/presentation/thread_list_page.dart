@@ -4,6 +4,8 @@ import 'package:osp_broker/core/widgets/navbar.dart';
 import 'package:osp_broker/features/forum/domain/entities/category.dart';
 import 'package:osp_broker/features/forum/domain/entities/thread.dart';
 import 'package:osp_broker/features/forum/presentation/forum_shared_widgets.dart';
+import 'auction_bidding_section.dart';
+import 'auction_bidding_dummy_data.dart';
 
 /// Displays a list of threads for a given category, with left & right panels persistent.
 class ThreadListPage extends StatelessWidget {
@@ -17,7 +19,7 @@ class ThreadListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
-      body: Column(
+      body: Column( 
         children: [
           const AppNavBar(),
           Row(
@@ -67,9 +69,12 @@ class ThreadListPage extends StatelessWidget {
                     children: [
                       Text(category.name,
                           style: TextStyle(
-                              fontSize: 28.sp,
+                              fontSize: 28.sp, 
                               fontWeight: FontWeight.w800,
                               fontFamily: 'Montserrat')),
+                      SizedBox(height: 24.h),
+                      // Auction Bidding Section (UI as per provided design)
+                      AuctionBiddingSection(auctionData: auctionBiddingDummyData),
                       SizedBox(height: 24.h),
                       ...threads.map((thread) => GestureDetector(
                             onTap: () {

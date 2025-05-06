@@ -319,7 +319,7 @@ class _PublicForumsSection extends StatelessWidget {
               margin: EdgeInsets.all(18.h),
               padding: EdgeInsets.all(18.w),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFFEBE6DC),
                 borderRadius: BorderRadius.circular(16.r),
               ),
               child: Column(

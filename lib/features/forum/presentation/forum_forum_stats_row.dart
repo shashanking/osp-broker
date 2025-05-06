@@ -14,7 +14,7 @@ class ForumStatsRow extends StatelessWidget {
     required this.topics,
     required this.posts,
     required this.lastPost,
-    required this.moderator,
+    required this.moderator, 
     this.highlight = false,
   }) : super(key: key);
 
