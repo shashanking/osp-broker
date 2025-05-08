@@ -3,12 +3,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/auth_notifier.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AuthFormState>(authNotifierProvider, (previous, next) {
+      if (previous?.isLoading == true &&
+          next.isLoading == false &&
+          next.errorMessage == null) {
+        // Success: Navigate to home
+        context.go('/');
+      }
+    });
     final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
@@ -89,7 +98,8 @@ class LoginPage extends ConsumerWidget {
               Expanded(
                 flex: 7,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 48.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 36.w, vertical: 48.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -117,7 +127,9 @@ class LoginPage extends ConsumerWidget {
                         children: [
                           _RoleToggleButton(selected: true, label: 'User'),
                           SizedBox(width: 8.w),
-                          _RoleToggleButton(selected: false, label: 'Business + Representative'),
+                          _RoleToggleButton(
+                              selected: false,
+                              label: 'Business + Representative'),
                         ],
                       ),
                       SizedBox(height: 32.h),
@@ -131,7 +143,8 @@ class LoginPage extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Enter details',
+                            Text(
+                              'Enter details',
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'Montserrat',
@@ -144,27 +157,50 @@ class LoginPage extends ConsumerWidget {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('Email', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                                      Text('Email',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
                                       _LoginTextField(
-  hint: 'Enter Email ID',
-  isPassword: false,
-  errorText: !authState.isEmailValid && authState.email.isNotEmpty ? 'Please enter a valid email' : null,
-  onChanged: (val) => ref.read(authNotifierProvider.notifier).setEmail(val),
-),
+                                        hint: 'Enter Email ID',
+                                        isPassword: false,
+                                        errorText: !authState.isEmailValid &&
+                                                authState.email.isNotEmpty
+                                            ? 'Please enter a valid email'
+                                            : null,
+                                        onChanged: (val) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .emailChanged(val),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 SizedBox(width: 16.w),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text('Password', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp)),
+                                      Text('Password',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp)),
                                       SizedBox(height: 6.h),
-                                      _LoginTextField(hint: 'Enter Password', isPassword: true),
+                                      _LoginTextField(
+                                        hint: 'Enter Password',
+                                        isPassword: true,
+                                        errorText: !authState.isPasswordValid &&
+                                                authState.password.isNotEmpty
+                                            ? 'Password must be at least 6 characters'
+                                            : null,
+                                        onChanged: (val) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .passwordChanged(val),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -181,13 +217,18 @@ class LoginPage extends ConsumerWidget {
                           height: 48.h,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromRGBO(36, 67, 155, 1),
+                              backgroundColor:
+                                  const Color.fromRGBO(36, 67, 155, 1),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(56.r),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await ref
+                                  .read(authNotifierProvider.notifier)
+                                  .login();
+                            },
                             child: Text(
                               'Login',
                               style: TextStyle(
@@ -347,7 +388,9 @@ class _LoginTextFieldState extends State<_LoginTextField> {
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
-                  _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                  _obscureText
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
                   size: 20.sp,
                   color: _obscureText ? Colors.black : Colors.blue,
                 ),
@@ -361,21 +404,24 @@ class _LoginTextFieldState extends State<_LoginTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
           borderSide: BorderSide(
-            color: widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
+            color:
+                widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
             width: 1.5,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
           borderSide: BorderSide(
-            color: widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
+            color:
+                widget.errorText != null ? Colors.red : const Color(0xFFD9D9D9),
             width: 1.5,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24.r),
           borderSide: BorderSide(
-            color: widget.errorText != null ? Colors.red : const Color(0xFF242B9B),
+            color:
+                widget.errorText != null ? Colors.red : const Color(0xFF242B9B),
             width: 1.5,
           ),
         ),
@@ -386,6 +432,17 @@ class _LoginTextFieldState extends State<_LoginTextField> {
         fontWeight: FontWeight.w400,
         fontSize: 16.sp,
       ),
+      validator: (value) {
+        if (widget.isPassword) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter a password';
+          }
+          if (value.length < 8) {
+            return 'Password must be at least 8 characters long';
+          }
+        }
+        return null;
+      },
     );
   }
 }
@@ -404,7 +461,7 @@ class _SocialLoginButton extends StatelessWidget {
     required this.borderColor,
   });
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: 56.h,

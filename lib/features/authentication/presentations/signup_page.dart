@@ -3,12 +3,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/auth_notifier.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AuthFormState>(authNotifierProvider, (previous, next) {
+      if (previous?.isLoading == true &&
+          next.isLoading == false &&
+          next.errorMessage == null) {
+        // Success: Navigate to home
+        context.go('/');
+      }
+    });
     final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
@@ -125,6 +134,20 @@ class SignupPage extends ConsumerWidget {
                         ],
                       ),
                       SizedBox(height: 32.h),
+                      // Show error message if exists
+                      if (authState.errorMessage != null) ...[
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 12.h),
+                          child: Text(
+                            authState.errorMessage!,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ),
+                      ],
                       // Form fields
                       Container(
                         width: double.infinity,
@@ -161,6 +184,14 @@ class SignupPage extends ConsumerWidget {
                                       _SignupTextField(
                                         hint: 'First Name',
                                         label: '',
+                                        onChanged: (value) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .fullNameChanged(value),
+                                        errorText:
+                                            authState.fullName.isNotEmpty &&
+                                                    !authState.isFullNameValid
+                                                ? 'Full name is required.'
+                                                : null,
                                       ),
                                     ],
                                   ),
@@ -179,8 +210,9 @@ class SignupPage extends ConsumerWidget {
                                       _SignupTextField(
                                         hint: 'Enter Email ID',
                                         label: 'Email',
-                                        onChanged: (value) =>
-                                            ref.read(authNotifierProvider.notifier).setEmail(value),
+                                        onChanged: (value) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .emailChanged(value),
                                         errorText: authState.email.isNotEmpty &&
                                                 !authState.isEmailValid
                                             ? 'Invalid email (must be @... and .com)'
@@ -207,8 +239,9 @@ class SignupPage extends ConsumerWidget {
                                       _SignupTextField(
                                         hint: 'Enter Phone Number',
                                         label: 'Phone',
-                                        onChanged: (value) =>
-                                            ref.read(authNotifierProvider.notifier).setPhone(value),
+                                        onChanged: (value) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .phoneChanged(value),
                                         errorText: authState.phone.isNotEmpty &&
                                                 !authState.isPhoneValid
                                             ? 'Phone must be 10 digits'
@@ -232,12 +265,14 @@ class SignupPage extends ConsumerWidget {
                                         hint: 'Enter Password',
                                         label: 'Password',
                                         isPassword: true,
-                                        onChanged: (value) =>
-                                            ref.read(authNotifierProvider.notifier).setPassword(value),
-                                        errorText: authState.password.isNotEmpty &&
-                                                !authState.isPasswordValid
-                                            ? 'Passwords do not match'
-                                            : null,
+                                        onChanged: (value) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .passwordChanged(value),
+                                        errorText:
+                                            authState.password.isNotEmpty &&
+                                                    !authState.isPasswordValid
+                                                ? 'Passwords do not match'
+                                                : null,
                                       ),
                                     ],
                                   ),
@@ -261,9 +296,11 @@ class SignupPage extends ConsumerWidget {
                                         hint: 'Confirm Password',
                                         label: 'Confirm Password',
                                         isPassword: true,
-                                        onChanged: (value) =>
-                                            ref.read(authNotifierProvider.notifier).setConfirmPassword(value),
-                                        errorText: authState.confirmPassword.isNotEmpty &&
+                                        onChanged: (value) => ref
+                                            .read(authNotifierProvider.notifier)
+                                            .confirmPasswordChanged(value),
+                                        errorText: authState.confirmPassword
+                                                    .isNotEmpty &&
                                                 !authState.isPasswordValid
                                             ? 'Passwords do not match'
                                             : null,
@@ -310,7 +347,11 @@ class SignupPage extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(56.r),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await ref
+                                  .read(authNotifierProvider.notifier)
+                                  .signup();
+                            },
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
@@ -501,7 +542,9 @@ class _SignupTextFieldState extends State<_SignupTextField> {
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
-                  _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                  _obscureText
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
                   size: 20.sp,
                   color: _obscureText ? Colors.black : Colors.blue,
                 ),
@@ -522,7 +565,8 @@ class _SignupTextFieldState extends State<_SignupTextField> {
                         lastDate: DateTime.now(),
                       );
                       if (picked != null) {
-                        _controller?.text = "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
+                        _controller?.text =
+                            "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
                       }
                     },
                   )
@@ -555,7 +599,8 @@ class _SignupTextFieldState extends State<_SignupTextField> {
                 lastDate: DateTime.now(),
               );
               if (picked != null) {
-                _controller?.text = "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
+                _controller?.text =
+                    "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
               }
             }
           : null,
@@ -584,7 +629,7 @@ class _SocialLoginButton extends StatelessWidget {
       height: 56.h,
       width: 230.w,
       decoration: BoxDecoration(
-        color:const Color(0xFFEBE6DC),
+        color: const Color(0xFFEBE6DC),
         borderRadius: BorderRadius.circular(56.r),
         border: Border.all(color: const Color.fromARGB(255, 189, 189, 189)),
       ),

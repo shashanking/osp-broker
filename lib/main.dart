@@ -3,15 +3,23 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'router/app_router.dart';
-import 'features/home/presentation/home_page.dart';
+import 'core/infrastructure/hive_init.dart';
+import 'core/infrastructure/providers.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final authBox = await openAuthBox();
   runApp(
     ScreenUtilInit(
       designSize: const Size(1920, 1080),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) => const ProviderScope(child: MyApp()),
+      builder: (context, child) => ProviderScope(
+        overrides: [
+          authBoxProvider.overrideWithValue(authBox),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router/go_router.dart';
 import '../../features/menu/application/menu_notifier.dart';
+import '../../core/infrastructure/providers.dart';
+import '../../core/infrastructure/base_api_service.dart';
 
 class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   final double height;
@@ -17,6 +18,11 @@ class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final menuState = ref.watch(menuNotifierProvider);
+    final authBox = ref.watch(authBoxProvider);
+    final token = authBox.get('token');
+    final fullName = authBox.get('fullName');
+    print('[NAVBAR] Token: '
+        '[33m$token[0m, Name: [36m$fullName[0m');
     return Container(
       height: height,
       color: bgColor,
@@ -52,39 +58,6 @@ class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 }
 
-class _NavButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-  final Color color;
-  final Color textColor;
-  const _NavButton({
-    required this.label,
-    required this.onTap,
-    this.color = const Color(0xFF24439B),
-    this.textColor = const Color(0xFFEBE6DC),
-  });
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontFamily: 'Basement Grotesque',
-            fontWeight: FontWeight.w800,
-            fontSize: 20,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _CircleIcon extends StatelessWidget {
   final IconData icon;
@@ -109,34 +82,52 @@ class _CircleIcon extends StatelessWidget {
   }
 }
 
-class _ProfileMenu extends StatelessWidget {
+
+
+class _ProfileMenu extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authBox = ref.watch(authBoxProvider);
+    final isLoggedIn = authBox.get('token') != null && (authBox.get('token') as String).isNotEmpty;
+    if (!isLoggedIn) {
+      return const SizedBox.shrink();
+    }
     return Row(
       children: [
-        Container(
-          width: 52,
-          height: 52,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF24439B), Color(0xFF15A5CD)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        GestureDetector(
+          onTap: () async {
+            final apiService = ref.read(baseApiServiceProvider);
+            await apiService.clearAuthToken();
+            // ignore: use_build_context_synchronously
+            if (context.mounted) {
+              context.go('/');
+            }
+            ref.invalidate(authBoxProvider); // force UI refresh
+          },
+          child: Container(
+            width: 52,
+            height: 52,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF24439B), Color(0xFF15A5CD)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(32)),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(32)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile.png'),
-              radius: 22,
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/profile.png'),
+                radius: 22,
+              ),
             ),
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          'Jeremy Warner',
-          style: TextStyle(
+        Text(
+          authBox.get('fullName', defaultValue: 'User') ?? 'User',
+          style: const TextStyle(
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w800,
             fontSize: 20,
