@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_router/go_router.dart';
+import 'package:osp_broker/features/UserProfileInnerPage/presentation/user_profile_hero_section.dart';
 import '../../features/menu/application/menu_notifier.dart';
+
 
 class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   final double height;
@@ -134,15 +136,25 @@ class _ProfileMenu extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          'Jeremy Warner',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w800,
-            fontSize: 20,
-            color: Color(0xFF121212),
-          ),
-        ),
+        GestureDetector(
+  onTap: () {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const UserProfileHero(),
+      ),
+    );
+  },
+  child: const Text(
+    'Jeremy Warner',
+    style: TextStyle(
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.w800,
+      fontSize: 20,
+      color: Color(0xFF121212),
+      decoration: TextDecoration.none,
+    ),
+  ),
+),
         const SizedBox(width: 10),
         const Icon(Icons.keyboard_arrow_down,
             color: Color(0xFF121212), size: 24),
