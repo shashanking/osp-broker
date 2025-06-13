@@ -5,6 +5,7 @@ import '../../features/menu/application/menu_notifier.dart';
 import '../../core/infrastructure/providers.dart';
 import '../../core/infrastructure/base_api_service.dart';
 
+
 class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   final double height;
   final Color bgColor;
