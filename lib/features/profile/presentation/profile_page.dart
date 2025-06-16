@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:osp_broker/core/infrastructure/providers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osp_broker/core/widgets/navbar.dart';
 import 'package:osp_broker/features/profile/application/profile_notifier.dart';
-import 'package:osp_broker/features/profile/application/profile_model.dart';
-import 'package:osp_broker/features/profile/presentation/user_profile_mid_section.dart';
 import 'package:osp_broker/features/profile/presentation/user_profile_end_section.dart';
+import 'user_profile_mid_section.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -14,314 +14,273 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
-  bool _isInitialized = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _scheduleProfileInit();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInitialized) {
-      _scheduleProfileInit();
-    }
-  }
-
-  void _scheduleProfileInit() {
-    if (_isInitialized) return;
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _initProfile();
-        _isInitialized = true;
-      }
-    });
-  }
-
-  void _initProfile() {
-    print('[ProfilePage] _initProfile called');
-    
-    // Ensure we're mounted before proceeding
-    if (!mounted) return;
-    
-    // Use a microtask to ensure we're not in the build phase
-    Future.microtask(() {
-      if (!mounted) return;
-      
-      final notifier = ref.read(profileNotifierProvider.notifier);
-      final authBox = ref.read(authBoxProvider);
-
-      // Always use the current user's ID from auth state
-      final userId = authBox.get('userId');
-      print('[ProfilePage] User ID from auth box: $userId');
-      
-      if (userId != null) {
-        print('[ProfilePage] Setting profile ID and fetching profile...');
-        notifier.setCurrentProfileId(userId);
-      } else {
-        print('[ProfilePage] No user ID found in auth box');
-      }
-    });
-  }
-
-  void _refreshProfile() {
-    final notifier = ref.read(profileNotifierProvider.notifier);
-    notifier.fetchCurrentProfile();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final profileState = ref.watch(profileNotifierProvider);
-    final userProfile = profileState.userProfile;
-
-    // Show loading indicator while fetching profile
-    if (profileState.isLoading && userProfile == null) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+    final state = ref.watch(profileNotifierProvider);
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(70),
+          child: AppNavBar(),
         ),
-      );
-    }
-
-    // Show error message if there was an error
-    if (profileState.errorMessage != null && userProfile == null) {
-      return Scaffold(
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Error: ${profileState.errorMessage}'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _refreshProfile,
-                child: const Text('Retry'),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    // Cover Image
+                    Container(
+                      width: double.infinity,
+                      height: 380,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/cover_img.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    // Profile Picture (overlapping)
+                    Positioned(
+                      left: 16,
+                      bottom: -88,
+                      child: Container(
+                        width: 146,
+                        height: 146,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Image.asset(
+                            'assets/images/profile_pic.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(height: 50), // Space for profile image overlap
+
+              // User profile details section
+              Transform.translate(
+                offset: const Offset(0, -50),
+                child: UserProfileDetails(user: demoUserProfile),
+              ),
+
+              // Reward cards section
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RewardCard(
+                    iconPath: 'assets/icons/KudoCoins.png',
+                    value: '540',
+                    label: 'Kudo Coins',
+                    gradient: LinearGradient(
+                      begin: Alignment(-1, 0),
+                      end: Alignment(1, 0),
+                      colors: [
+                        Color(0xFFD89B2B),
+                        Color(0xFFF7CB80),
+                        Color(0xFFE8D5B6),
+                      ],
+                      stops: [0.03, 0.48, 1.0],
+                      transform: GradientRotation(4.535), // ~260deg
+                    ),
+                  ),
+                  SizedBox(width: 40),
+                  RewardCard(
+                    iconPath: 'assets/icons/Gems.png',
+                    value: '2,400',
+                    label: 'Gem Stones',
+                    gradient: LinearGradient(
+                      begin: Alignment(-1, 0),
+                      end: Alignment(1, 0),
+                      colors: [
+                        Color(0xFFC97FD3),
+                        Color(0xFFF3DAE8),
+                        Color(0xFFD5ABEC),
+                      ],
+                      stops: [0.03, 0.54, 1.0],
+                      transform: GradientRotation(4.535), // ~260deg
+                    ),
+                  ),
+                ],
+              ),
+
+              // Mid section (Info, Inventory, About, Stats)
+              const SizedBox(height: 32),
+              state.userProfile != null
+                  ? UserProfileMidSection(userProfile: state.userProfile!)
+                  : const SizedBox(),
+              const UserProfileEndSection()
             ],
           ),
-        ),
-      );
-    }
-
-    // Show empty state if no profile is available
-    if (userProfile == null) {
-      return const Scaffold(
-        body: Center(
-          child: Text('No profile data available'),
-        ),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            : null,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Cover Image and Profile Picture
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                // Cover Image
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    image: DecorationImage(
-                      image: userProfile!.profileImageUrl.isNotEmpty
-                          ? NetworkImage(userProfile.profileImageUrl)
-                          : const AssetImage('assets/images/cover_img.png')
-                              as ImageProvider,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Profile Picture
-                Positioned(
-                  left: 20,
-                  bottom: -50,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: userProfile.profileImageUrl.isNotEmpty
-                          ? Image.network(
-                              userProfile.profileImageUrl,
-                              fit: BoxFit.cover,
-                            )
-                          : const Icon(Icons.person, size: 50),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 60),
-
-            UserProfileDetails(user: userProfile),
-
-            // Action Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
-                children: [
-                  _FollowButton(),
-                  const SizedBox(width: 16),
-                  _MessageButton(),
-                ],
-              ),
-            ),
-
-            // Stats
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildStatColumn('Posts', '42'),
-                  _buildStatColumn('Following', '1.2K'),
-                  _buildStatColumn('Followers', '8.5K'),
-                ],
-              ),
-            ),
-            const Divider(),
-
-            // User Stats and About Section
-            UserProfileMidSection(userProfile: userProfile),
-
-            // User Posts/Content Section
-            const UserProfileEndSection(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatColumn(String label, String value) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          value,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
+        ));
   }
 }
+
+// --- DATA MODEL ---
+class UserProfile {
+  final String name;
+  final String bio;
+  final bool isOnline;
+  final int followingCount;
+  final List<String> followingAvatars;
+
+  UserProfile({
+    required this.name,
+    required this.bio,
+    required this.isOnline,
+    required this.followingCount,
+    required this.followingAvatars,
+  });
+}
+
+final demoUserProfile = UserProfile(
+  name: 'Sarah Davis',
+  bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  isOnline: true,
+  followingCount: 54596,
+  followingAvatars: [
+    'assets/images/follow1.png',
+    'assets/images/follow2.png',
+    'assets/images/follow3.png',
+  ],
+);
 
 // --- DETAILS WIDGET ---
 class UserProfileDetails extends StatelessWidget {
   final UserProfile user;
-
-  const UserProfileDetails({
-    super.key,
-    required this.user,
-  });
+  const UserProfileDetails({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
-      child: Column(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Name and verification badge
-          Row(
-            children: [
-              Text(
-                user.headLine,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              if (user.isVerified) ...[
-                const SizedBox(width: 8),
-                const Icon(Icons.verified, color: Colors.blue, size: 20),
-              ],
-            ],
-          ),
-
-          // Location
-          if (user.location.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Row(
+          const SizedBox(width: 160), // Space for overlapped profile image
+          // Info and actions
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.location_on_outlined,
-                    size: 16, color: Colors.grey),
-                const SizedBox(width: 4),
-                Text(
-                  user.location,
-                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Name & bio
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.name,
+                            style: const TextStyle(
+                              fontSize: 34,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'Montserrat',
+                              color: Color(0xFF121212),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            user.bio,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Color(0xFF656565),
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF232323),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF37D159),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 7),
+                                    const Text(
+                                      'Online',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Action buttons
+                    Row(
+                      children: [
+                        _FollowButton(),
+                        const SizedBox(width: 16),
+                        _MessageButton(),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 18),
+                // Following avatars & count
+                Row(
+                  children: [
+                    ...user.followingAvatars.map((avatar) => Padding(
+                          padding: const EdgeInsets.only(right: 6),
+                          child: CircleAvatar(
+                            radius: 18,
+                            backgroundImage: AssetImage(avatar),
+                          ),
+                        )),
+                    const SizedBox(width: 10),
+                    Text(
+                      '${user.followingCount.toString().replaceAllMapped(RegExp(r"(\d{1,3})(?=(\d{3})+(?!\d))"), (Match m) => "${m[1]},")} Following',
+                      style: const TextStyle(
+                        fontSize: 17,
+                        color: Color(0xFF656565),
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-
-          // About
-          if (user.about.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Text(
-              user.about,
-              style: const TextStyle(fontSize: 16, height: 1.5),
-            ),
-          ],
-
-          // Skills
-          if (user.skills.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: user.skills
-                  .map((skill) => Chip(
-                        label: Text(skill),
-                        backgroundColor: Colors.grey[200],
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        labelStyle: const TextStyle(fontSize: 14),
-                      ))
-                  .toList(),
-            ),
-          ],
+          ),
         ],
       ),
     );
@@ -344,9 +303,8 @@ class RewardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: screenWidth * 0.4,
+      width: 0.45.sw,
       height: 135,
       decoration: BoxDecoration(
         gradient: gradient,

@@ -419,7 +419,7 @@ class _Badge extends StatelessWidget {
   final Color color;
   final String label;
   const _Badge(
-      { required this.icon, required this.color, required this.label,});
+      {required this.icon, required this.color, required this.label,});
 
   factory _Badge.free() => _Badge(
       icon: Image.asset(

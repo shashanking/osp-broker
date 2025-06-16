@@ -25,8 +25,8 @@ final dioProvider = Provider<Dio>((ref) {
     error: true,
   ));
   return dio;
-});
+}, dependencies: []);
 
 final authBoxProvider = Provider<Box>((ref) {
   throw UnimplementedError('authBox must be initialized before use');
-});
+}, dependencies: []);

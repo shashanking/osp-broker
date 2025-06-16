@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:validators/validators.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -68,32 +69,62 @@ class AuthNotifier extends StateNotifier<AuthFormState> {
     state = state.copyWith(confirmPassword: value, errorMessage: null);
   }
 
+  void clearError() {
+    state = state.copyWith(errorMessage: null);
+  }
+
   Future<void> login() async {
+    // Update state to loading
     state = state.copyWith(isLoading: true, errorMessage: null);
+
     try {
-      final response = await _apiService.post(ApiUrls.login, data: {
-        'email': state.email,
-        'password': state.password,
-      });
+      final response = await _apiService.post(
+        ApiUrls.login,
+        data: {
+          'email': state.email.trim(),
+          'password': state.password,
+        },
+        requiresAuth: false, // Explicitly set to false for login endpoint
+      );
 
       print('Login successful: ${response.data}');
 
-      // Store authentication token from the correct response structure
+      // Store authentication token and user details from the response
       if (response.data['data'] != null &&
           response.data['data']['accessToken'] != null) {
-        final token = response.data['data']['accessToken'];
-        final fullName =
-            response.data['data']['user']['fullName'] ?? state.fullName;
+        final token = response.data['data']['accessToken'] as String;
+        final userData = response.data['data']['user'] as Map<String, dynamic>;
+        final fullName = (userData['fullName'] as String?) ?? '';
+        final userId = userData['id']?.toString() ?? '';
+
+        // Save token and user details
         await _apiService.setAuthToken(token);
         await _apiService.setUserDetails(fullName);
-        print('Token stored: $token');
-      }
+        await _apiService.setUserId(userId);
 
-      state = state.copyWith(isLoading: false);
+        // Update state with user details
+        state = state.copyWith(
+          fullName: fullName,
+          isLoading: false,
+        );
+
+        print('User $fullName logged in successfully');
+      } else {
+        throw Exception('Invalid response format: Missing required fields');
+      }
     } catch (e) {
       print('Login failed: $e');
+      final errorMessage =
+          e is DioException && e.response?.data is Map<String, dynamic>
+              ? e.response!.data['message']?.toString() ??
+                  'Login failed. Please try again.'
+              : 'Login failed. Please check your credentials and try again.';
+
       state = state.copyWith(
-          isLoading: false, errorMessage: 'Login failed. Please try again.');
+        isLoading: false,
+        errorMessage: errorMessage,
+      );
+      rethrow;
     }
   }
 
@@ -165,4 +196,5 @@ final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthFormState>(
     final apiService = ref.watch(baseApiServiceProvider);
     return AuthNotifier(apiService);
   },
+  dependencies: [baseApiServiceProvider],
 );

@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../application/auth_notifier.dart';
 import 'package:go_router/go_router.dart';
+import '../application/auth_notifier.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen<AuthFormState>(authNotifierProvider, (previous, next) {
-      if (previous?.isLoading == true &&
-          next.isLoading == false &&
-          next.errorMessage == null) {
-        // Success: Navigate to home
-        context.go('/');
-      }
-    });
+    // Set up listener for auth state changes
+    ref.listen<AuthFormState>(
+      authNotifierProvider,
+      (previous, next) {
+        if (previous?.isLoading == true && next.isLoading == false) {
+          if (next.errorMessage == null) {
+            // Success: Navigate to home
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.go('/');
+            });
+          } else {
+            // Show error message if any
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(next.errorMessage ?? 'Login failed')),
+            );
+          }
+        }
+      },
+    );
+
     final authState = ref.watch(authNotifierProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFEBE6DC),
@@ -215,31 +227,52 @@ class LoginPage extends ConsumerWidget {
                           width: 250,
                           height: 48.h,
                           child: ElevatedButton(
+                            onPressed: authState.isLoading
+                                ? null
+                                : () async {
+                                    if (authState.isLoading) return;
+
+                                    // Clear any previous errors
+                                    ref
+                                        .read(authNotifierProvider.notifier)
+                                        .clearError();
+
+                                    try {
+                                      await ref
+                                          .read(authNotifierProvider.notifier)
+                                          .login();
+                                    } catch (e) {
+                                      // Error is handled in the notifier
+                                    }
+                                  },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromRGBO(36, 67, 155, 1),
-                              foregroundColor: Colors.white,
+                              backgroundColor: const Color(0xFF24439B),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(56.r),
                               ),
                             ),
-                            onPressed: () async {
-                              await ref
-                                  .read(authNotifierProvider.notifier)
-                                  .login();
-                            },
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                                color: Colors.white,
-                              ),
-                            ),
+                            child: authState.isLoading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18.sp,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
+
                       SizedBox(height: 12.h),
                       Row(
                         children: [
@@ -252,7 +285,9 @@ class LoginPage extends ConsumerWidget {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.go('/signup');
+                            },
                             child: Text(
                               'Sign Up',
                               style: TextStyle(

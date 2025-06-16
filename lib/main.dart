@@ -13,14 +13,13 @@ void main() async {
   final authBox = await openAuthBox();
   
   // Create ProviderContainer for initialization
-  final container = ProviderContainer();
+  // final container = ProviderContainer();
 
   // Initialize the auth box notifier with the opened auth box
   // final authBoxNotifier = AuthBoxNotifier(authBox);
   
   runApp(
-    UncontrolledProviderScope(
-      container: container,
+    ProviderScope(
       child: ScreenUtilInit(
         designSize: const Size(1920, 1080),
         minTextAdapt: true,
