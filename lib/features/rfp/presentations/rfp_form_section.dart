@@ -449,10 +449,10 @@ class _BudgetRangeWidgetState extends State<_BudgetRangeWidget> {
 
   String _formatCurrency(double value) {
     // Format as $ 5,000
-    return '\$ ' + value.toStringAsFixed(0).replaceAllMapped(
+    return '\$ ${value.toStringAsFixed(0).replaceAllMapped(
       RegExp(r"(\d{1,3})(?=(\d{3})+(?!\d))"),
       (Match m) => ",${m[1]}",
-    ).replaceFirst(',', '');
+    ).replaceFirst(',', '')}';
   }
 }
 

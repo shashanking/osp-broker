@@ -43,3 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+# ignore freezed files 
+*.g.dart
+*.freezed.dart
+*.freezed.dart
+
+#ignore lock files 
+pubspec.lock
+
+#ignore analysis options file
+analysis_options.yaml

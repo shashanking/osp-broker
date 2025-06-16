@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MembershipCardSection extends StatelessWidget {
-  const MembershipCardSection({Key? key}) : super(key: key);
+  const MembershipCardSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -419,8 +419,7 @@ class _Badge extends StatelessWidget {
   final Color color;
   final String label;
   const _Badge(
-      {required this.icon, required this.color, required this.label, Key? key})
-      : super(key: key);
+      { required this.icon, required this.color, required this.label,});
 
   factory _Badge.free() => _Badge(
       icon: Image.asset(

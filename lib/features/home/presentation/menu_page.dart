@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 class MenuPage extends StatelessWidget {
   final VoidCallback? onClose;
-  const MenuPage({Key? key, this.onClose}) : super(key: key);
+  const MenuPage({super.key, this.onClose});
 
   static const Color bgColor = Color(0xFFEBE6DC);
   static const Color highlightColor = Color(0xFF24439B);

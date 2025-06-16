@@ -6,7 +6,6 @@ import '../../../core/widgets/navbar.dart';
 import 'about_us_mission_section.dart';
 import 'about_us_why_choose_section.dart';
 import 'about_us_join_section.dart';
-import 'package:video_player/video_player.dart';
 import 'package:osp_broker/features/about-us/presentation/_about_us_hero_video.dart';
 
 class AboutUsPage extends StatelessWidget {

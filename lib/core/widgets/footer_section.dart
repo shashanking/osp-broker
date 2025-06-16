@@ -6,10 +6,7 @@ import 'package:osp_broker/core/constants/app_constants.dart';
 import 'package:osp_broker/core/theme/app_colors.dart';
 import 'package:osp_broker/core/theme/app_text_styles.dart';
 import 'package:osp_broker/core/theme/app_gradients.dart';
-import 'package:osp_broker/features/about-us/presentation/about_us_page.dart';
 
-import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
-import 'package:osp_broker/features/contactUs/presentations/contact_us_page.dart';
 import 'package:osp_broker/features/menu/application/menu_notifier.dart';
 
 class FooterSection extends ConsumerWidget {
@@ -18,7 +15,7 @@ class FooterSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
- final menuState = ref.watch(menuNotifierProvider);
+ ref.watch(menuNotifierProvider);
     final menuNotifier = ref.read(menuNotifierProvider.notifier);
 
     final footerMenuItems = [
@@ -446,26 +443,13 @@ class FooterSection extends ConsumerWidget {
   }
 }
 
-// Helper class for menu items
-class _FooterMenuItem {
-  final String label;
-  final Widget Function()? pageBuilder;
-  const _FooterMenuItem({required this.label, this.pageBuilder});
-}
 
-final List<_FooterMenuItem> _footerMenuItems = [
-  _FooterMenuItem(label: 'Memberships', pageBuilder: () => const MembershipHeroSection()),
-  _FooterMenuItem(label: 'About Us', pageBuilder: () => const AboutUsPage()),
-  _FooterMenuItem(label: 'Forums'),
-  _FooterMenuItem(label: 'Contact Us', pageBuilder: () => const ContactUsPage()),
-  _FooterMenuItem(label: 'RFP'),
-];
 
 class _FooterSocialIcon extends StatelessWidget {
   final String asset;
   final Gradient gradient;
   const _FooterSocialIcon(
-      {required this.asset, required this.gradient, super.key});
+      {required this.asset, required this.gradient});
 
   @override
   Widget build(BuildContext context) {

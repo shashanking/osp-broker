@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AuctionBiddingSection extends StatelessWidget {
   final List<Map<String, dynamic>> auctionData;
-  const AuctionBiddingSection({Key? key, required this.auctionData}) : super(key: key);
+  const AuctionBiddingSection({super.key, required this.auctionData});
 
   @override
   Widget build(BuildContext context) {

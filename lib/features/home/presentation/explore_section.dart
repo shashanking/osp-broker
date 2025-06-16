@@ -143,13 +143,14 @@ class _ExploreBlogCard extends StatefulWidget {
   final String image, date, author, title, desc;
   final bool isLarge;
   const _ExploreBlogCard({
+    
     required this.image,
     required this.date,
     required this.author,
     required this.title,
     required this.desc,
     required this.isLarge,
-    super.key,
+    
   });
 
   @override

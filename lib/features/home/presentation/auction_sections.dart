@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:osp_broker/features/authentication/presentations/signup_page.dart';
 
 class Auction {
   final String imageUrl;
@@ -256,6 +255,8 @@ class AuctionsSection extends StatelessWidget {
 }
 
 class AuctionSearchFilterBar extends StatelessWidget {
+  const AuctionSearchFilterBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -361,7 +362,7 @@ class AuctionSearchFilterBar extends StatelessWidget {
 
 class AuctionCardGrid extends StatelessWidget {
   final List<Auction> auctions;
-  const AuctionCardGrid({Key? key, required this.auctions}) : super(key: key);
+  const AuctionCardGrid({super.key, required this.auctions});
 
   @override
   Widget build(BuildContext context) {
@@ -403,7 +404,7 @@ class AuctionCardGrid extends StatelessWidget {
 
 class AuctionCard extends StatelessWidget {
   final Auction auction;
-  const AuctionCard({Key? key, required this.auction}) : super(key: key);
+  const AuctionCard({super.key, required this.auction});
   @override
   Widget build(BuildContext context) {
     return Container(

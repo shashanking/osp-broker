@@ -10,13 +10,13 @@ class ForumStatsRow extends StatelessWidget {
   final bool highlight;
 
   const ForumStatsRow({
-    Key? key,
+    super.key,
     required this.topics,
     required this.posts,
     required this.lastPost,
     required this.moderator, 
     this.highlight = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

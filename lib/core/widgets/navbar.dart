@@ -10,8 +10,7 @@ class AppNavBar extends ConsumerWidget implements PreferredSizeWidget {
   final double height;
   final Color bgColor;
   const AppNavBar(
-      {Key? key, this.height = 80, this.bgColor = Colors.transparent})
-      : super(key: key);
+      {super.key, this.height = 80, this.bgColor = Colors.transparent});
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -126,13 +125,18 @@ class _ProfileMenu extends ConsumerWidget {
           ),
         ),
         const SizedBox(width: 10),
-        Text(
-          authBox.get('fullName', defaultValue: 'User') ?? 'User',
-          style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w800,
-            fontSize: 20,
-            color: Color(0xFF121212),
+        GestureDetector(
+          onTap: () {
+            context.go('/profile');
+          },
+          child: Text(
+            authBox.get('fullName', defaultValue: 'User') ?? 'User',
+            style: const TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w800,
+              fontSize: 20,
+              color: Color(0xFF121212),
+            ),
           ),
         ),
         const SizedBox(width: 10),
@@ -145,7 +149,7 @@ class _ProfileMenu extends ConsumerWidget {
 
 class _MenuButton extends StatelessWidget {
   final String activeMenu;
-  const _MenuButton({Key? key, required this.activeMenu}) : super(key: key);
+  const _MenuButton({required this.activeMenu});
 
   @override
   Widget build(BuildContext context) {

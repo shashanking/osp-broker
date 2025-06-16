@@ -7,11 +7,11 @@ class HeroSectionVisibilityWrapper extends StatefulWidget {
   final VoidCallback onInvisible;
 
   const HeroSectionVisibilityWrapper({
-    Key? key,
+    super.key,
     required this.child,
     required this.onVisible,
     required this.onInvisible,
-  }) : super(key: key);
+  });
 
   @override
   State<HeroSectionVisibilityWrapper> createState() => _HeroSectionVisibilityWrapperState();

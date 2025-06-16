@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:osp_broker/features/authentication/presentations/login_page.dart';
 import 'package:osp_broker/features/authentication/presentations/signup_page.dart';
@@ -11,6 +10,7 @@ import 'package:osp_broker/features/home/presentation/home_page.dart';
 import 'package:osp_broker/features/about-us/presentation/about_us_page.dart';
 import 'package:osp_broker/features/membership/presentation/membership_herosection.dart';
 import 'package:osp_broker/features/contactUs/presentations/contact_us_page.dart';
+import 'package:osp_broker/features/profile/presentation/profile_page.dart';
 import 'package:osp_broker/features/rfp/presentations/rfp_page.dart';
 import 'package:osp_broker/features/menu/presentation/menu_page.dart';
 
@@ -56,6 +56,10 @@ final GoRouter appRouter = GoRouter(
       path: '/menu',
       builder: (context, state) => const MenuPage(),
     ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfilePage(),
+    ),
     // Forum main page
     GoRoute(
       path: '/forums',
@@ -66,7 +70,7 @@ final GoRouter appRouter = GoRouter(
           path: ':categoryId',
           builder: (context, state) {
             final categoryId = state.pathParameters['categoryId']!;
-            // TODO: Fetch category and threads by categoryId
+            
             // Pass dummy data for now
             return ThreadListPage(
               category: Category(id: categoryId, name: categoryId),
@@ -79,7 +83,7 @@ final GoRouter appRouter = GoRouter(
               path: 'thread/:threadId',
               builder: (context, state) {
                 final threadId = state.pathParameters['threadId']!;
-                // TODO: Fetch thread and comments by threadId
+                
                 // Pass dummy data for now
                 return ThreadPage(
                   thread: Thread(

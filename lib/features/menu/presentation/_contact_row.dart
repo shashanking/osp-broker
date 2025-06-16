@@ -6,7 +6,7 @@ class ContactRow extends StatelessWidget {
   final IconData icon;
   final String text;
   final bool multiLine;
-  const ContactRow({required this.icon, required this.text, this.multiLine = false});
+  const ContactRow({super.key, required this.icon, required this.text, this.multiLine = false});
 
   @override
   Widget build(BuildContext context) {

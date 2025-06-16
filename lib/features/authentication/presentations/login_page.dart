@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/auth_notifier.dart';
 import 'package:go_router/go_router.dart';
@@ -359,8 +358,7 @@ class _LoginTextField extends StatefulWidget {
     this.isPassword = false,
     this.errorText,
     this.onChanged,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   State<_LoginTextField> createState() => _LoginTextFieldState();

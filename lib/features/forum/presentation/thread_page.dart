@@ -8,7 +8,7 @@ import 'forum_shared_widgets.dart';
 class ThreadPage extends StatelessWidget {
   final Thread thread;
   final List<Comment> comments;
-  const ThreadPage({Key? key, required this.thread, required this.comments}) : super(key: key);
+  const ThreadPage({super.key, required this.thread, required this.comments});
 
   @override
   Widget build(BuildContext context) {

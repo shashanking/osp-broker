@@ -86,7 +86,7 @@ class UserProfileEndSection extends StatelessWidget {
             children: [
               const _SectionHeading('Settings'),
               const SizedBox(height: 18),
-              ...settingsData.map((item) => _SettingsRow(item: item)).toList(),
+              ...settingsData.map((item) => _SettingsRow(item: item)),
               const SizedBox(height: 18),
               const Text('Linked Accounts', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, fontSize: 20)),
               const SizedBox(height: 12),

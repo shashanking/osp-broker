@@ -494,8 +494,7 @@ class _SignupTextField extends StatefulWidget {
     this.isDate = false,
     this.onChanged,
     this.errorText,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   State<_SignupTextField> createState() => _SignupTextFieldState();

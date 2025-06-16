@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ContactUsSection extends StatelessWidget {
-  const ContactUsSection({Key? key}) : super(key: key);
+  const ContactUsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final divider = Container(
-      width: 6,
-      margin: const EdgeInsets.symmetric(vertical: 32),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF15A5CD),
-            Color(0x0015A5CD),
-          ], 
-        ),
-      ),
-    );
     return Center(
       
       child: Container(

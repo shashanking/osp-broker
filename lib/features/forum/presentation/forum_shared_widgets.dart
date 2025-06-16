@@ -8,8 +8,8 @@ class CategoriesList extends StatelessWidget {
   final void Function(String category)? onCategoryTap;
   final Map<String, IconData> categoryIcons;
 
-  CategoriesList({
-    Key? key,
+  const CategoriesList({
+    super.key,
     required this.categories,
     this.onCategoryTap,
     Map<String, IconData>? categoryIcons,
@@ -19,8 +19,7 @@ class CategoriesList extends StatelessWidget {
               'Services': Icons.settings,
               'Machines': Icons.precision_manufacturing,
               'Auctions': Icons.gavel, 
-            },
-        super(key: key);
+            };
 
   @override
   Widget build(BuildContext context) {
@@ -51,58 +50,55 @@ class CategoriesList extends StatelessWidget {
             ),
           ),
           SizedBox(height: 18.h),
-          Container(
-            // height: 0.78.sh,
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                ...categories.map(
-                  (cat) => Padding(
-                    padding: EdgeInsets.only(bottom: 8.h),
-                    child: GestureDetector(
-                      onTap: () => onCategoryTap?.call(cat),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF7F7F7),
-                          border: Border.all(
-                              color: const Color(0xFFC8C8C8), width: 1),
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 6.h, horizontal: 12.w),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 44.w,
-                              height: 44.w,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(24.r),
-                              ),
-                              child: Icon(
-                                categoryIcons[cat] ?? Icons.category,
-                                color: Colors.white,
-                                size: 24.sp,
-                              ),
+          ListView(
+            shrinkWrap: true,
+            children: [
+              ...categories.map(
+                (cat) => Padding(
+                  padding: EdgeInsets.only(bottom: 8.h),
+                  child: GestureDetector(
+                    onTap: () => onCategoryTap?.call(cat),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF7F7F7),
+                        border: Border.all(
+                            color: const Color(0xFFC8C8C8), width: 1),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 6.h, horizontal: 12.w),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 44.w,
+                            height: 44.w,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(24.r),
                             ),
-                            SizedBox(width: 22.w),
-                            Text(
-                              cat,
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20.sp,
-                                color: Colors.black,
-                              ),
+                            child: Icon(
+                              categoryIcons[cat] ?? Icons.category,
+                              color: Colors.white,
+                              size: 24.sp,
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(width: 22.w),
+                          Text(
+                            cat,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20.sp,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           )
         ],
       ),
@@ -112,7 +108,7 @@ class CategoriesList extends StatelessWidget {
 
 /// Shared: Event Calendar
 class EventCalendar extends StatelessWidget {
-  const EventCalendar({Key? key}) : super(key: key);
+  const EventCalendar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +243,7 @@ class EventCalendar extends StatelessWidget {
 
 /// Shared: Poll Section
 class PollSection extends StatelessWidget {
-  const PollSection({Key? key}) : super(key: key);
+  const PollSection({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(

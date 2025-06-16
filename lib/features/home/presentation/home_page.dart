@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:osp_broker/core/theme/app_colors.dart';
 import 'package:osp_broker/core/theme/app_text_styles.dart';
-import 'package:osp_broker/core/theme/app_gradients.dart';
 import 'package:osp_broker/features/home/presentation/about_us_section.dart';
 import 'package:osp_broker/features/home/presentation/explore_section.dart';
 import 'package:osp_broker/core/widgets/footer_section.dart';
 import 'package:osp_broker/features/home/presentation/featured_section.dart';
 import 'package:osp_broker/features/home/presentation/rfp_section.dart';
-import 'package:osp_broker/features/home/presentation/featured_section.dart';
 import 'package:osp_broker/features/home/presentation/what_we_offer_section.dart';
 import 'package:osp_broker/features/home/presentation/membership_section.dart';
 import 'package:osp_broker/features/home/presentation/testimonial_section.dart';
 import 'package:video_player/video_player.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import 'hero_section_visibility_wrapper.dart';
 import '../../../core/widgets/navbar.dart';
 import 'auction_sections.dart';
@@ -178,6 +175,7 @@ class HeroSection extends StatelessWidget {
   final bool initialized;
 
   const HeroSection({
+    super.key,
     required this.controller,
     required this.gradientController,
     required this.initialized,

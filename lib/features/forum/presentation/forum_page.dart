@@ -5,11 +5,10 @@ import 'package:osp_broker/core/widgets/navbar.dart';
 
 import 'forum_shared_widgets.dart';
 import 'forum_forum_stats_row.dart';
-import 'thread_list_page.dart';
 import 'package:osp_broker/features/forum/domain/entities/category.dart';
 
 class ForumPage extends StatelessWidget {
-  const ForumPage({Key? key}) : super(key: key);
+  const ForumPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +52,7 @@ class ForumPage extends StatelessWidget {
                 ),
               ),
               // Center Panel: Forum content
-              Container(
+              SizedBox(
                 width: 0.5.sw,
                 height: 0.88.sh,
                 child: Padding(

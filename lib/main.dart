@@ -4,21 +4,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'router/app_router.dart';
 import 'core/infrastructure/hive_init.dart';
-import 'core/infrastructure/providers.dart';
+import 'core/infrastructure/providers.dart' show AuthBoxNotifier, authBoxProvider, cookieManagerProvider;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Hive and get auth box
   final authBox = await openAuthBox();
+  
+  // Create ProviderContainer for initialization
+  final container = ProviderContainer();
+
+  // Initialize the auth box notifier with the opened auth box
+  // final authBoxNotifier = AuthBoxNotifier(authBox);
+  
   runApp(
-    ScreenUtilInit(
-      designSize: const Size(1920, 1080),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) => ProviderScope(
-        overrides: [
+    UncontrolledProviderScope(
+      container: container,
+      child: ScreenUtilInit(
+        designSize: const Size(1920, 1080),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) => ProviderScope(
+          overrides: [
           authBoxProvider.overrideWithValue(authBox),
-        ],
-        child: const MyApp(),
+          ],
+          child: const MyApp(),
+        ),
       ),
     ),
   );

@@ -11,9 +11,7 @@ import 'auction_bidding_dummy_data.dart';
 class ThreadListPage extends StatelessWidget {
   final Category category;
   final List<Thread> threads;
-  const ThreadListPage(
-      {Key? key, required this.category, required this.threads})
-      : super(key: key);
+  const ThreadListPage({super.key, required this.category, required this.threads});
 
   @override
   Widget build(BuildContext context) {

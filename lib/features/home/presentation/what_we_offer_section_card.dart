@@ -5,7 +5,7 @@ class OfferCard extends StatefulWidget {
   final String icon;
   final String title;
   final String desc;
-  const OfferCard({required this.icon, required this.title, required this.desc, Key? key}) : super(key: key);
+  const OfferCard({super.key,required this.icon, required this.title, required this.desc});
 
   @override
   State<OfferCard> createState() => _OfferCardState();

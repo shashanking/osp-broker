@@ -21,7 +21,7 @@ mixin _$AuthFormState {
   String get phone => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get confirmPassword => throw _privateConstructorUsedError;
-  String get role => throw _privateConstructorUsedError; // Default to USER
+  String get role => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -220,7 +220,6 @@ class _$AuthFormStateImpl extends _AuthFormState {
   @override
   @JsonKey()
   final String role;
-// Default to USER
   @override
   @JsonKey()
   final bool isLoading;
@@ -288,7 +287,7 @@ abstract class _AuthFormState extends AuthFormState {
   @override
   String get confirmPassword;
   @override
-  String get role; // Default to USER
+  String get role;
   @override
   bool get isLoading;
   @override
